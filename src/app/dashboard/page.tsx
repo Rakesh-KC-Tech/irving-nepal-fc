@@ -56,9 +56,25 @@ export default async function DashboardPage() {
       </Link>
 
       {isApproved && (
-        <div className="rounded-md border border-gray-200 p-4 text-sm text-gray-700">
-          Full member area (teams, matches, payments) is coming in later
-          steps.
+        <div className="grid grid-cols-3 gap-3">
+          <Link
+            href="/teams"
+            className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+          >
+            Teams
+          </Link>
+          <Link
+            href="/events"
+            className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+          >
+            Events
+          </Link>
+          <Link
+            href="/stats"
+            className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+          >
+            Stats
+          </Link>
         </div>
       )}
 

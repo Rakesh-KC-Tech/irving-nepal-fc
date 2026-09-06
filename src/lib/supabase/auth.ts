@@ -35,6 +35,16 @@ export async function requireUser() {
   return { supabase, user, profile };
 }
 
+export async function requireApproved() {
+  const { supabase, user, profile } = await requireUser();
+
+  if (profile?.status !== "approved") {
+    redirect("/dashboard");
+  }
+
+  return { supabase, user, profile };
+}
+
 export async function requireAdmin() {
   const { supabase, user, profile } = await requireUser();
 
