@@ -59,13 +59,13 @@ Open [http://localhost:3000](http://localhost:3000).
 2. In Vercel, "Add New Project" → import the repo.
 3. Add the same environment variables from `.env.local` in the Vercel
    project's Settings → Environment Variables (set `NEXT_PUBLIC_SITE_URL` to
-   your production URL, e.g. `https://portal.irvingnepalfc.org`).
+   your production URL, e.g. `https://portal.irvingnepalfc.com`).
 4. Deploy.
 5. In your domain's DNS settings (IONOS), add a `CNAME` record:
    `portal` → `cname.vercel-dns.com` (Vercel will show the exact value once
    you add the domain in Project Settings → Domains). Once it resolves, add a
    "🔐 Member Login" button on the existing IONOS site linking to
-   `https://portal.irvingnepalfc.org`.
+   `https://portal.irvingnepalfc.com`.
 
 ## Roadmap
 
