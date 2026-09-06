@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { requireUser } from "@/lib/supabase/auth";
+import { MembershipCard } from "@/components/MembershipCard";
 import { signout } from "../login/actions";
 
 const STATUS_MESSAGE: Record<string, string> = {
@@ -37,11 +38,22 @@ export default async function DashboardPage() {
         </div>
       )}
 
+      {isApproved && profile && (
+        <MembershipCard profile={profile} email={user.email ?? ""} />
+      )}
+
       <div className="rounded-md border border-gray-200 p-4 text-sm text-gray-700">
         <p>Email: {user.email}</p>
         <p>Role: {profile?.role ?? "member"}</p>
         <p>Status: {profile?.status ?? "pending"}</p>
       </div>
+
+      <Link
+        href="/profile"
+        className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+      >
+        Edit Profile
+      </Link>
 
       {isApproved && (
         <div className="rounded-md border border-gray-200 p-4 text-sm text-gray-700">

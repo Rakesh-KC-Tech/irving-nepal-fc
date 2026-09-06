@@ -13,7 +13,7 @@ export default async function AdminPage() {
 
   const { data: members } = await supabase
     .from("profiles")
-    .select("id, full_name, role, status, created_at")
+    .select("id, full_name, role, status, member_number, created_at")
     .order("created_at", { ascending: false });
 
   return (
@@ -25,6 +25,7 @@ export default async function AdminPage() {
           <thead className="bg-gray-50 text-xs uppercase text-gray-500">
             <tr>
               <th className="px-4 py-2">Name</th>
+              <th className="px-4 py-2">Member No.</th>
               <th className="px-4 py-2">Role</th>
               <th className="px-4 py-2">Status</th>
               <th className="px-4 py-2">Actions</th>
@@ -34,6 +35,9 @@ export default async function AdminPage() {
             {members?.map((member) => (
               <tr key={member.id} className="border-t border-gray-200">
                 <td className="px-4 py-2">{member.full_name ?? "—"}</td>
+                <td className="px-4 py-2 font-mono text-xs">
+                  {member.member_number ?? "—"}
+                </td>
                 <td className="px-4 py-2">{member.role}</td>
                 <td className="px-4 py-2">
                   <span
