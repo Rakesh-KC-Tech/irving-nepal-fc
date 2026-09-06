@@ -51,7 +51,10 @@ language plpgsql
 security definer set search_path = public
 as $$
 begin
-  if not public.is_admin(auth.uid()) then
+  -- auth.uid() is null when the statement runs outside a logged-in request
+  -- (SQL Editor, service_role key, migrations) — trust those unconditionally
+  -- and only block a regular authenticated member from self-promoting.
+  if auth.uid() is not null and not public.is_admin(auth.uid()) then
     new.role := old.role;
     new.status := old.status;
   end if;
