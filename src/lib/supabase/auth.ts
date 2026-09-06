@@ -10,11 +10,12 @@ export type Profile = {
   emergency_contact_name: string | null;
   emergency_contact_phone: string | null;
   member_number: string | null;
+  membership_expires_at: string | null;
   created_at: string;
 };
 
 const PROFILE_COLUMNS =
-  "full_name, role, status, phone, date_of_birth, emergency_contact_name, emergency_contact_phone, member_number, created_at";
+  "full_name, role, status, phone, date_of_birth, emergency_contact_name, emergency_contact_phone, member_number, membership_expires_at, created_at";
 
 export async function requireUser() {
   const supabase = await createClient();

@@ -23,6 +23,12 @@ export default async function AdminLayout({
           <Link href="/admin/events" className="text-sm underline">
             Events
           </Link>
+          <Link href="/admin/announcements" className="text-sm underline">
+            Announcements
+          </Link>
+          <Link href="/admin/documents" className="text-sm underline">
+            Documents
+          </Link>
           <Link href="/dashboard" className="text-sm underline">
             Back to dashboard
           </Link>

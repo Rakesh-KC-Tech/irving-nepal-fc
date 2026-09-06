@@ -13,3 +13,19 @@ export async function setMemberStatus(
 
   revalidatePath("/admin");
 }
+
+export async function setMembershipExpiration(
+  memberId: string,
+  formData: FormData,
+) {
+  const { supabase } = await requireAdmin();
+
+  const expiresAt = formData.get("expiresAt") as string;
+
+  await supabase
+    .from("profiles")
+    .update({ membership_expires_at: expiresAt || null })
+    .eq("id", memberId);
+
+  revalidatePath("/admin");
+}

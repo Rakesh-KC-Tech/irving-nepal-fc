@@ -8,6 +8,8 @@ const PROTECTED_PREFIXES = [
   "/teams",
   "/events",
   "/stats",
+  "/announcements",
+  "/documents",
 ];
 
 export async function updateSession(request: NextRequest) {

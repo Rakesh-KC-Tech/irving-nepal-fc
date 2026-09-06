@@ -12,9 +12,29 @@ const STATUS_MESSAGE: Record<string, string> = {
 };
 
 export default async function DashboardPage() {
-  const { user, profile } = await requireUser();
+  const { supabase, user, profile } = await requireUser();
 
   const isApproved = profile?.status === "approved";
+
+  let unreadCount = 0;
+  if (isApproved) {
+    const { data: announcements } = await supabase
+      .from("announcements")
+      .select("id");
+    const { data: reads } = await supabase
+      .from("announcement_reads")
+      .select("announcement_id")
+      .eq("profile_id", user.id);
+    const readIds = new Set(reads?.map((r) => r.announcement_id));
+    unreadCount = announcements?.filter((a) => !readIds.has(a.id)).length ?? 0;
+  }
+
+  const expiresAt = profile?.membership_expires_at
+    ? new Date(profile.membership_expires_at)
+    : null;
+  const daysUntilExpiry = expiresAt
+    ? Math.ceil((expiresAt.getTime() - Date.now()) / 86_400_000)
+    : null;
 
   return (
     <div className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-4 py-12">
@@ -40,6 +60,14 @@ export default async function DashboardPage() {
 
       {isApproved && profile && (
         <MembershipCard profile={profile} email={user.email ?? ""} />
+      )}
+
+      {isApproved && daysUntilExpiry !== null && daysUntilExpiry <= 30 && (
+        <div className="rounded-md bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          {daysUntilExpiry < 0
+            ? "Your membership has expired. Contact the club to renew."
+            : `Your membership expires in ${daysUntilExpiry} day${daysUntilExpiry === 1 ? "" : "s"}.`}
+        </div>
       )}
 
       <div className="rounded-md border border-gray-200 p-4 text-sm text-gray-700">
@@ -74,6 +102,23 @@ export default async function DashboardPage() {
             className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
           >
             Stats
+          </Link>
+          <Link
+            href="/announcements"
+            className="relative rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+          >
+            Announcements
+            {unreadCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs text-white">
+                {unreadCount}
+              </span>
+            )}
+          </Link>
+          <Link
+            href="/documents"
+            className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+          >
+            Documents
           </Link>
         </div>
       )}

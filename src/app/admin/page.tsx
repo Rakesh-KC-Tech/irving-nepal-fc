@@ -1,5 +1,5 @@
 import { requireAdmin } from "@/lib/supabase/auth";
-import { setMemberStatus } from "./actions";
+import { setMemberStatus, setMembershipExpiration } from "./actions";
 
 const STATUS_STYLES: Record<string, string> = {
   pending: "bg-amber-100 text-amber-800",
@@ -13,7 +13,9 @@ export default async function AdminPage() {
 
   const { data: members } = await supabase
     .from("profiles")
-    .select("id, full_name, role, status, member_number, created_at")
+    .select(
+      "id, full_name, role, status, member_number, membership_expires_at, created_at",
+    )
     .order("created_at", { ascending: false });
 
   return (
@@ -28,6 +30,7 @@ export default async function AdminPage() {
               <th className="px-4 py-2">Member No.</th>
               <th className="px-4 py-2">Role</th>
               <th className="px-4 py-2">Status</th>
+              <th className="px-4 py-2">Expires</th>
               <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
@@ -45,6 +48,25 @@ export default async function AdminPage() {
                   >
                     {member.status}
                   </span>
+                </td>
+                <td className="px-4 py-2">
+                  <form className="flex items-center gap-1">
+                    <input
+                      type="date"
+                      name="expiresAt"
+                      defaultValue={member.membership_expires_at ?? ""}
+                      className="rounded border border-gray-300 px-1 py-0.5 text-xs"
+                    />
+                    <button
+                      formAction={setMembershipExpiration.bind(
+                        null,
+                        member.id,
+                      )}
+                      className="rounded-md border border-gray-300 px-2 py-1 text-xs"
+                    >
+                      Save
+                    </button>
+                  </form>
                 </td>
                 <td className="px-4 py-2">
                   {member.role === "admin" ? (
