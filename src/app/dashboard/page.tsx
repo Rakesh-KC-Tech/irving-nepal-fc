@@ -120,6 +120,12 @@ export default async function DashboardPage() {
           >
             Documents
           </Link>
+          <Link
+            href="/membership"
+            className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+          >
+            Membership
+          </Link>
         </div>
       )}
 
