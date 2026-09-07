@@ -12,26 +12,10 @@ export default async function AdminLayout({
   return (
     <div className="mx-auto flex min-h-screen max-w-4xl flex-col gap-6 px-4 py-12">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Admin</h1>
+        <Link href="/admin" className="text-2xl font-semibold">
+          Admin
+        </Link>
         <div className="flex items-center gap-3">
-          <Link href="/admin" className="text-sm underline">
-            Members
-          </Link>
-          <Link href="/admin/teams" className="text-sm underline">
-            Teams
-          </Link>
-          <Link href="/admin/events" className="text-sm underline">
-            Events
-          </Link>
-          <Link href="/admin/announcements" className="text-sm underline">
-            Announcements
-          </Link>
-          <Link href="/admin/documents" className="text-sm underline">
-            Documents
-          </Link>
-          <Link href="/admin/plans" className="text-sm underline">
-            Plans
-          </Link>
           <Link href="/dashboard" className="text-sm underline">
             Back to dashboard
           </Link>
@@ -45,6 +29,32 @@ export default async function AdminLayout({
           </form>
         </div>
       </div>
+      <nav className="flex flex-wrap items-center gap-3 border-b border-gray-200 pb-3">
+        <Link href="/admin/members" className="text-sm underline">
+          Members
+        </Link>
+        <Link href="/admin/teams" className="text-sm underline">
+          Teams
+        </Link>
+        <Link href="/admin/events" className="text-sm underline">
+          Events
+        </Link>
+        <Link href="/admin/announcements" className="text-sm underline">
+          Announcements
+        </Link>
+        <Link href="/admin/documents" className="text-sm underline">
+          Documents
+        </Link>
+        <Link href="/admin/plans" className="text-sm underline">
+          Plans
+        </Link>
+        <Link href="/admin/payments" className="text-sm underline">
+          Payments
+        </Link>
+        <Link href="/admin/audit-logs" className="text-sm underline">
+          Audit Logs
+        </Link>
+      </nav>
       {children}
     </div>
   );

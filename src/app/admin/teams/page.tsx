@@ -12,12 +12,7 @@ export default async function AdminTeamsPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-medium">Teams</h2>
-        <Link href="/admin" className="text-sm underline">
-          Members
-        </Link>
-      </div>
+      <h2 className="text-lg font-medium">Teams</h2>
 
       <div className="flex flex-col gap-2">
         {teams?.map((team) => (
