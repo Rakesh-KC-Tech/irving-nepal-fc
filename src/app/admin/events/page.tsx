@@ -16,7 +16,7 @@ export default async function AdminEventsPage() {
     .order("name");
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="min-w-0 flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-medium">Matches & Training</h2>
         <Link href="/admin/teams" className="text-sm underline">

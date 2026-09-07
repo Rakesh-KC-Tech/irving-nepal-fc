@@ -22,7 +22,7 @@ export default async function MembershipPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-4 py-12">
+    <div className="mx-auto flex w-full min-w-0 min-h-screen max-w-2xl flex-col gap-6 px-4 py-12">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Membership</h1>
         <Link href="/dashboard" className="text-sm underline">
@@ -80,7 +80,7 @@ export default async function MembershipPage() {
         <h2 className="mb-2 text-sm font-medium uppercase text-gray-500">
           Payment History
         </h2>
-        <div className="overflow-hidden rounded-md border border-gray-200">
+        <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
           <table className="w-full text-left text-sm">
             <thead className="bg-gray-50 text-xs uppercase text-gray-500">
               <tr>

@@ -39,7 +39,7 @@ export default async function AdminTeamRosterPage({
   const addPlayerWithTeam = addPlayer.bind(null, teamId);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="min-w-0 flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-medium">{team.name} — Roster</h2>
         <Link href="/admin/teams" className="text-sm underline">
@@ -47,7 +47,7 @@ export default async function AdminTeamRosterPage({
         </Link>
       </div>
 
-      <div className="overflow-hidden rounded-md border border-gray-200">
+      <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
         <table className="w-full text-left text-sm">
           <thead className="bg-gray-50 text-xs uppercase text-gray-500">
             <tr>

@@ -43,7 +43,7 @@ export default async function StatsPage() {
   const rows = Array.from(totals.values()).sort((a, b) => b.goals - a.goals);
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-2xl flex-col gap-4 px-4 py-12">
+    <div className="mx-auto flex w-full min-w-0 min-h-screen max-w-2xl flex-col gap-4 px-4 py-12">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Statistics</h1>
         <Link href="/dashboard" className="text-sm underline">
@@ -51,7 +51,7 @@ export default async function StatsPage() {
         </Link>
       </div>
 
-      <div className="overflow-hidden rounded-md border border-gray-200">
+      <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
         <table className="w-full text-left text-sm">
           <thead className="bg-gray-50 text-xs uppercase text-gray-500">
             <tr>

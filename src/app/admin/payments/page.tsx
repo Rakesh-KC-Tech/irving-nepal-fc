@@ -27,7 +27,7 @@ export default async function AdminPaymentsPage() {
       .reduce((sum, p) => sum + p.amount_cents, 0) ?? 0;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="min-w-0 flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-medium">Payments</h2>
         <p className="text-sm text-gray-500">
@@ -35,7 +35,7 @@ export default async function AdminPaymentsPage() {
         </p>
       </div>
 
-      <div className="overflow-hidden rounded-md border border-gray-200">
+      <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
         <table className="w-full text-left text-sm">
           <thead className="bg-gray-50 text-xs uppercase text-gray-500">
             <tr>

@@ -38,7 +38,7 @@ export default async function AdminMemberDetailPage({
     .order("created_at", { ascending: false });
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="min-w-0 flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-medium">{member.full_name ?? "—"}</h2>
         <Link href="/admin/members" className="text-sm underline">
@@ -95,7 +95,7 @@ export default async function AdminMemberDetailPage({
         <h3 className="mb-2 text-sm font-medium uppercase text-gray-500">
           Payment History
         </h3>
-        <div className="overflow-hidden rounded-md border border-gray-200">
+        <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
           <table className="w-full text-left text-sm">
             <thead className="bg-gray-50 text-xs uppercase text-gray-500">
               <tr>

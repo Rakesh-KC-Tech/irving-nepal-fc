@@ -10,7 +10,7 @@ export default async function AdminLayout({
   await requireAdmin();
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-4xl flex-col gap-6 px-4 py-12">
+    <div className="mx-auto flex w-full min-w-0 min-h-screen max-w-4xl flex-col gap-6 px-4 py-12">
       <div className="flex items-center justify-between">
         <Link href="/admin" className="text-2xl font-semibold">
           Admin

@@ -48,7 +48,7 @@ export default async function EventDetailPage({
   };
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-4 py-12">
+    <div className="mx-auto flex w-full min-w-0 min-h-screen max-w-2xl flex-col gap-6 px-4 py-12">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">{event.title}</h1>
@@ -108,7 +108,7 @@ export default async function EventDetailPage({
           <h2 className="mb-2 text-sm font-medium uppercase text-gray-500">
             Stats
           </h2>
-          <div className="overflow-hidden rounded-md border border-gray-200">
+          <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
             <table className="w-full text-left text-sm">
               <thead className="bg-gray-50 text-xs uppercase text-gray-500">
                 <tr>

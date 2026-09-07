@@ -6,7 +6,7 @@ export default async function ProfilePage() {
   const { user, profile } = await requireUser();
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col gap-6 px-4 py-12">
+    <div className="mx-auto flex w-full min-w-0 min-h-screen max-w-md flex-col gap-6 px-4 py-12">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Edit Profile</h1>
         <Link href="/dashboard" className="text-sm underline">

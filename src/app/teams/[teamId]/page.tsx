@@ -33,7 +33,7 @@ export default async function TeamDetailPage({
     .order("starts_at");
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-4 py-12">
+    <div className="mx-auto flex w-full min-w-0 min-h-screen max-w-2xl flex-col gap-6 px-4 py-12">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">{team.name}</h1>
         <Link href="/teams" className="text-sm underline">
@@ -48,7 +48,7 @@ export default async function TeamDetailPage({
         <h2 className="mb-2 text-sm font-medium uppercase text-gray-500">
           Roster
         </h2>
-        <div className="overflow-hidden rounded-md border border-gray-200">
+        <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
           <table className="w-full text-left text-sm">
             <tbody>
               {roster?.map((member) => (

@@ -53,7 +53,7 @@ export default async function AdminOverviewPage() {
   ];
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="min-w-0 flex flex-col gap-6">
       <h2 className="text-lg font-medium">Overview</h2>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">

@@ -20,10 +20,10 @@ export default async function AdminMembersPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="min-w-0 flex flex-col gap-4">
       <h2 className="text-lg font-medium">Members</h2>
 
-      <div className="overflow-hidden rounded-md border border-gray-200">
+      <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
         <table className="w-full text-left text-sm">
           <thead className="bg-gray-50 text-xs uppercase text-gray-500">
             <tr>

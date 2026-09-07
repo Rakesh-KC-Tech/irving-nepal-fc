@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center gap-6 px-4 text-center">
+    <div className="mx-auto flex w-full min-w-0 min-h-screen max-w-2xl flex-col items-center justify-center gap-6 px-4 text-center">
       <h1 className="text-3xl font-semibold">Irving Nepal FC Member Portal</h1>
       <p className="text-gray-600">
         Manage your membership, teams, matches, and payments in one place.

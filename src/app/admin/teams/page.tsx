@@ -11,7 +11,7 @@ export default async function AdminTeamsPage() {
     .order("name");
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="min-w-0 flex flex-col gap-6">
       <h2 className="text-lg font-medium">Teams</h2>
 
       <div className="flex flex-col gap-2">

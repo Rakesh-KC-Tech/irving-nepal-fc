@@ -20,7 +20,7 @@ export default async function MembershipSuccessPage({
   const isPaid = payment?.status === "paid";
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-4 px-4 text-center">
+    <div className="mx-auto flex w-full min-w-0 min-h-screen max-w-md flex-col items-center justify-center gap-4 px-4 text-center">
       <h1 className="text-2xl font-semibold">
         {isPaid ? "Payment Received" : "Processing Payment…"}
       </h1>

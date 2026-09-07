@@ -62,7 +62,7 @@ export default async function AdminEventDetailPage({
     : "grid-cols-[1.5fr_1fr_auto_auto]";
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="min-w-0 flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-medium">{event.title}</h2>
@@ -78,7 +78,7 @@ export default async function AdminEventDetailPage({
         </Link>
       </div>
 
-      <div className="overflow-x-auto rounded-md border border-gray-200">
+      <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
         <div className={`grid ${gridCols} gap-x-3 gap-y-2 p-3 text-sm`}>
           <div className="text-xs font-medium uppercase text-gray-500">
             Name

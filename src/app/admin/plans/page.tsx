@@ -14,7 +14,7 @@ export default async function AdminPlansPage() {
     .order("price_cents");
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="min-w-0 flex flex-col gap-6">
       <h2 className="text-lg font-medium">Membership Plans</h2>
 
       <form className="flex flex-col gap-3 rounded-md border border-gray-200 p-4">
