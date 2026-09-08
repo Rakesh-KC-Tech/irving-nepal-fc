@@ -52,7 +52,7 @@ export default async function EventDetailPage({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">{event.title}</h1>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-mist">
             {(event.teams as unknown as { name: string })?.name} ·{" "}
             {new Date(event.starts_at).toLocaleString()}
             {event.location ? ` · ${event.location}` : ""}
@@ -64,10 +64,10 @@ export default async function EventDetailPage({
         </Link>
       </div>
 
-      {event.notes && <p className="text-sm text-gray-700">{event.notes}</p>}
+      {event.notes && <p className="text-sm text-mist">{event.notes}</p>}
 
       <form className="flex items-center gap-2">
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-mist">
           {myResponse ? `You: ${RSVP_LABEL[myResponse]}` : "RSVP:"}
         </span>
         {(["yes", "maybe", "no"] as const).map((option) => (
@@ -76,8 +76,8 @@ export default async function EventDetailPage({
             formAction={setRsvp.bind(null, event.id, option)}
             className={`rounded-md border px-3 py-1.5 text-sm ${
               myResponse === option
-                ? "border-black bg-black text-white"
-                : "border-gray-300"
+                ? "border-black bg-crimson text-white"
+                : "border-line"
             }`}
           >
             {RSVP_LABEL[option]}
@@ -87,11 +87,11 @@ export default async function EventDetailPage({
 
       <div className="grid grid-cols-3 gap-3 text-sm">
         {(["yes", "maybe", "no"] as const).map((option) => (
-          <div key={option} className="rounded-md border border-gray-200 p-3">
-            <p className="text-xs uppercase text-gray-500">
+          <div key={option} className="rounded-md border border-line p-3">
+            <p className="text-xs uppercase text-mist">
               {RSVP_LABEL[option]} ({grouped[option].length})
             </p>
-            <ul className="mt-1 text-gray-700">
+            <ul className="mt-1 text-mist">
               {grouped[option].map((r) => (
                 <li key={r.profile_id}>
                   {(r.profiles as unknown as { full_name: string | null })
@@ -105,12 +105,12 @@ export default async function EventDetailPage({
 
       {event.type === "match" && stats && stats.length > 0 && (
         <div>
-          <h2 className="mb-2 text-sm font-medium uppercase text-gray-500">
+          <h2 className="mb-2 text-sm font-medium uppercase text-mist">
             Stats
           </h2>
-          <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
+          <div className="min-w-0 overflow-x-auto rounded-md border border-line">
             <table className="w-full text-left text-sm">
-              <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+              <thead className="bg-white/5 text-xs uppercase text-mist">
                 <tr>
                   <th className="px-4 py-2">Player</th>
                   <th className="px-4 py-2">Goals</th>
@@ -121,7 +121,7 @@ export default async function EventDetailPage({
               </thead>
               <tbody>
                 {stats.map((s, i) => (
-                  <tr key={i} className="border-t border-gray-100">
+                  <tr key={i} className="border-t border-line">
                     <td className="px-4 py-2">
                       {(s.profiles as unknown as { full_name: string | null })
                         ?.full_name ?? "—"}

@@ -5,10 +5,10 @@ function formatCents(cents: number) {
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  pending: "bg-amber-100 text-amber-800",
-  paid: "bg-green-100 text-green-800",
-  failed: "bg-red-100 text-red-800",
-  refunded: "bg-gray-200 text-gray-700",
+  pending: "bg-gold/15 text-gold",
+  paid: "bg-emerald-500/15 text-emerald-300",
+  failed: "bg-crimson/15 text-crimson-2",
+  refunded: "bg-white/10 text-mist",
 };
 
 export default async function AdminPaymentsPage() {
@@ -30,14 +30,14 @@ export default async function AdminPaymentsPage() {
     <div className="min-w-0 flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-medium">Payments</h2>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-mist">
           Total revenue: {formatCents(totalRevenueCents)}
         </p>
       </div>
 
-      <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
+      <div className="min-w-0 overflow-x-auto rounded-md border border-line">
         <table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+          <thead className="bg-white/5 text-xs uppercase text-mist">
             <tr>
               <th className="px-4 py-2">Date</th>
               <th className="px-4 py-2">Member</th>
@@ -48,7 +48,7 @@ export default async function AdminPaymentsPage() {
           </thead>
           <tbody>
             {payments?.map((p) => (
-              <tr key={p.id} className="border-t border-gray-100">
+              <tr key={p.id} className="border-t border-line">
                 <td className="px-4 py-2">
                   {new Date(p.created_at).toLocaleString()}
                 </td>
@@ -72,7 +72,7 @@ export default async function AdminPaymentsPage() {
             ))}
             {payments?.length === 0 && (
               <tr>
-                <td className="px-4 py-3 text-gray-500" colSpan={5}>
+                <td className="px-4 py-3 text-mist" colSpan={5}>
                   No payments yet.
                 </td>
               </tr>

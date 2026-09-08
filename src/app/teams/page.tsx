@@ -23,16 +23,16 @@ export default async function TeamsPage() {
           <Link
             key={team.id}
             href={`/teams/${team.id}`}
-            className="rounded-md border border-gray-200 p-3 text-sm hover:bg-gray-50"
+            className="rounded-md border border-line p-3 text-sm hover:bg-white/5"
           >
             <p className="font-medium">{team.name}</p>
             {team.description && (
-              <p className="text-gray-500">{team.description}</p>
+              <p className="text-mist">{team.description}</p>
             )}
           </Link>
         ))}
         {teams?.length === 0 && (
-          <p className="text-sm text-gray-500">No teams yet.</p>
+          <p className="text-sm text-mist">No teams yet.</p>
         )}
       </div>
     </div>

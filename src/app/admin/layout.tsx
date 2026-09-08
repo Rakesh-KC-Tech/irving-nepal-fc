@@ -22,14 +22,14 @@ export default async function AdminLayout({
           <form>
             <button
               formAction={signout}
-              className="rounded-md border border-gray-300 px-3 py-1.5 text-sm"
+              className="rounded-md border border-line px-3 py-1.5 text-sm"
             >
               Log out
             </button>
           </form>
         </div>
       </div>
-      <nav className="flex flex-wrap items-center gap-3 border-b border-gray-200 pb-3">
+      <nav className="flex flex-wrap items-center gap-3 border-b border-line pb-3">
         <Link href="/admin/members" className="text-sm underline">
           Members
         </Link>

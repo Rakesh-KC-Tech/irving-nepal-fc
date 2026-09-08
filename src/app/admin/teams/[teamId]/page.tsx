@@ -47,9 +47,9 @@ export default async function AdminTeamRosterPage({
         </Link>
       </div>
 
-      <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
+      <div className="min-w-0 overflow-x-auto rounded-md border border-line">
         <table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+          <thead className="bg-white/5 text-xs uppercase text-mist">
             <tr>
               <th className="px-4 py-2">Name</th>
               <th className="px-4 py-2">Number</th>
@@ -59,7 +59,7 @@ export default async function AdminTeamRosterPage({
           </thead>
           <tbody>
             {roster?.map((member) => (
-              <tr key={member.profile_id} className="border-t border-gray-200">
+              <tr key={member.profile_id} className="border-t border-line">
                 <td className="px-4 py-2">
                   {(member.profiles as unknown as { full_name: string | null })
                     ?.full_name ?? "—"}
@@ -74,7 +74,7 @@ export default async function AdminTeamRosterPage({
                         teamId,
                         member.profile_id,
                       )}
-                      className="text-xs text-red-600 underline"
+                      className="text-xs text-crimson-2 underline"
                     >
                       Remove
                     </button>
@@ -84,7 +84,7 @@ export default async function AdminTeamRosterPage({
             ))}
             {roster?.length === 0 && (
               <tr>
-                <td className="px-4 py-3 text-gray-500" colSpan={4}>
+                <td className="px-4 py-3 text-mist" colSpan={4}>
                   No players on this team yet.
                 </td>
               </tr>
@@ -93,12 +93,12 @@ export default async function AdminTeamRosterPage({
         </table>
       </div>
 
-      <form className="flex flex-col gap-3 rounded-md border border-gray-200 p-4">
+      <form className="flex flex-col gap-3 rounded-md border border-line p-4">
         <h3 className="text-sm font-medium">Add a player</h3>
         <select
           name="profileId"
           required
-          className="rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="bg-paper text-navy rounded-md border border-line px-3 py-2 text-sm"
         >
           <option value="">Select a member…</option>
           {addable?.map((p) => (
@@ -112,18 +112,18 @@ export default async function AdminTeamRosterPage({
             name="jerseyNumber"
             type="number"
             placeholder="Number"
-            className="w-24 rounded-md border border-gray-300 px-3 py-2 text-sm"
-          />
+            className="bg-paper text-navy w-24 rounded-md border border-line px-3 py-2 text-sm"
+           />
           <input
             name="position"
             type="text"
             placeholder="Position"
-            className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm"
-          />
+            className="bg-paper text-navy flex-1 rounded-md border border-line px-3 py-2 text-sm"
+           />
         </div>
         <button
           formAction={addPlayerWithTeam}
-          className="rounded-md bg-black px-3 py-2 text-sm font-medium text-white"
+          className="rounded-md bg-crimson px-3 py-2 text-sm font-medium text-white"
         >
           Add to Roster
         </button>

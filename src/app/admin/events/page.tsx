@@ -29,31 +29,31 @@ export default async function AdminEventsPage() {
           <Link
             key={event.id}
             href={`/admin/events/${event.id}`}
-            className="flex items-center justify-between rounded-md border border-gray-200 p-3 text-sm hover:bg-gray-50"
+            className="flex items-center justify-between rounded-md border border-line p-3 text-sm hover:bg-white/5"
           >
             <div>
               <p className="font-medium">{event.title}</p>
-              <p className="text-gray-500">
+              <p className="text-mist">
                 {(event.teams as unknown as { name: string })?.name} ·{" "}
                 {new Date(event.starts_at).toLocaleString()}
               </p>
             </div>
-            <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs uppercase">
+            <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs uppercase">
               {event.type}
             </span>
           </Link>
         ))}
         {events?.length === 0 && (
-          <p className="text-sm text-gray-500">No events yet.</p>
+          <p className="text-sm text-mist">No events yet.</p>
         )}
       </div>
 
-      <form className="flex flex-col gap-3 rounded-md border border-gray-200 p-4">
+      <form className="flex flex-col gap-3 rounded-md border border-line p-4">
         <h3 className="text-sm font-medium">Schedule a match or training</h3>
         <select
           name="teamId"
           required
-          className="rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="bg-paper text-navy rounded-md border border-line px-3 py-2 text-sm"
         >
           <option value="">Select a team…</option>
           {teams?.map((t) => (
@@ -65,7 +65,7 @@ export default async function AdminEventsPage() {
         <select
           name="type"
           required
-          className="rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="bg-paper text-navy rounded-md border border-line px-3 py-2 text-sm"
         >
           <option value="training">Training</option>
           <option value="match">Match</option>
@@ -75,32 +75,32 @@ export default async function AdminEventsPage() {
           type="text"
           placeholder="Title"
           required
-          className="rounded-md border border-gray-300 px-3 py-2 text-sm"
-        />
+          className="bg-paper text-navy rounded-md border border-line px-3 py-2 text-sm"
+         />
         <input
           name="opponent"
           type="text"
           placeholder="Opponent (for matches)"
-          className="rounded-md border border-gray-300 px-3 py-2 text-sm"
-        />
+          className="bg-paper text-navy rounded-md border border-line px-3 py-2 text-sm"
+         />
         <input
           name="location"
           type="text"
           placeholder="Location"
-          className="rounded-md border border-gray-300 px-3 py-2 text-sm"
-        />
+          className="bg-paper text-navy rounded-md border border-line px-3 py-2 text-sm"
+         />
         <label className="flex flex-col gap-1 text-sm">
           Date & time
           <input
             name="startsAt"
             type="datetime-local"
             required
-            className="rounded-md border border-gray-300 px-3 py-2"
-          />
+            className="bg-paper text-navy rounded-md border border-line px-3 py-2"
+           />
         </label>
         <button
           formAction={createEvent}
-          className="rounded-md bg-black px-3 py-2 text-sm font-medium text-white"
+          className="rounded-md bg-crimson px-3 py-2 text-sm font-medium text-white"
         >
           Schedule
         </button>

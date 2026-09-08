@@ -13,9 +13,9 @@ export default async function AdminAuditLogsPage() {
     <div className="min-w-0 flex flex-col gap-4">
       <h2 className="text-lg font-medium">Audit Logs</h2>
 
-      <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
+      <div className="min-w-0 overflow-x-auto rounded-md border border-line">
         <table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+          <thead className="bg-white/5 text-xs uppercase text-mist">
             <tr>
               <th className="px-4 py-2">Date</th>
               <th className="px-4 py-2">Admin</th>
@@ -26,7 +26,7 @@ export default async function AdminAuditLogsPage() {
           </thead>
           <tbody>
             {logs?.map((log) => (
-              <tr key={log.id} className="border-t border-gray-100 align-top">
+              <tr key={log.id} className="border-t border-line align-top">
                 <td className="px-4 py-2 whitespace-nowrap">
                   {new Date(log.created_at).toLocaleString()}
                 </td>
@@ -38,14 +38,14 @@ export default async function AdminAuditLogsPage() {
                 <td className="px-4 py-2 font-mono text-xs">
                   {log.target_type ? `${log.target_type}:${log.target_id}` : "—"}
                 </td>
-                <td className="px-4 py-2 font-mono text-xs text-gray-500">
+                <td className="px-4 py-2 font-mono text-xs text-mist">
                   {log.details ? JSON.stringify(log.details) : ""}
                 </td>
               </tr>
             ))}
             {logs?.length === 0 && (
               <tr>
-                <td className="px-4 py-3 text-gray-500" colSpan={5}>
+                <td className="px-4 py-3 text-mist" colSpan={5}>
                   No activity logged yet.
                 </td>
               </tr>

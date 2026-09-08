@@ -30,7 +30,7 @@ export default async function MembershipPage() {
         </Link>
       </div>
 
-      <div className="rounded-md border border-gray-200 p-4 text-sm text-gray-700">
+      <div className="rounded-md border border-line p-4 text-sm text-mist">
         <p>
           Current expiration:{" "}
           {profile?.membership_expires_at
@@ -40,19 +40,19 @@ export default async function MembershipPage() {
       </div>
 
       <div>
-        <h2 className="mb-2 text-sm font-medium uppercase text-gray-500">
+        <h2 className="mb-2 text-sm font-medium uppercase text-mist">
           Renew / Pay
         </h2>
         <div className="flex flex-col gap-3">
           {plans?.map((plan) => (
             <div
               key={plan.id}
-              className="flex items-center justify-between rounded-md border border-gray-200 p-4 text-sm"
+              className="flex items-center justify-between rounded-md border border-line p-4 text-sm"
             >
               <div>
                 <p className="font-medium">{plan.name}</p>
                 {plan.description && (
-                  <p className="text-gray-500">{plan.description}</p>
+                  <p className="text-mist">{plan.description}</p>
                 )}
                 <p className="mt-1 font-mono">
                   {formatCents(plan.price_cents)}
@@ -61,7 +61,7 @@ export default async function MembershipPage() {
               <form>
                 <button
                   formAction={createCheckoutSession.bind(null, plan.id)}
-                  className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white"
+                  className="rounded-md bg-crimson px-4 py-2 text-sm font-medium text-white"
                 >
                   Pay Now
                 </button>
@@ -69,7 +69,7 @@ export default async function MembershipPage() {
             </div>
           ))}
           {plans?.length === 0 && (
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-mist">
               No membership plans available right now.
             </p>
           )}
@@ -77,12 +77,12 @@ export default async function MembershipPage() {
       </div>
 
       <div>
-        <h2 className="mb-2 text-sm font-medium uppercase text-gray-500">
+        <h2 className="mb-2 text-sm font-medium uppercase text-mist">
           Payment History
         </h2>
-        <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
+        <div className="min-w-0 overflow-x-auto rounded-md border border-line">
           <table className="w-full text-left text-sm">
-            <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+            <thead className="bg-white/5 text-xs uppercase text-mist">
               <tr>
                 <th className="px-4 py-2">Date</th>
                 <th className="px-4 py-2">Amount</th>
@@ -91,7 +91,7 @@ export default async function MembershipPage() {
             </thead>
             <tbody>
               {payments?.map((p) => (
-                <tr key={p.id} className="border-t border-gray-100">
+                <tr key={p.id} className="border-t border-line">
                   <td className="px-4 py-2">
                     {new Date(p.created_at).toLocaleString()}
                   </td>
@@ -101,7 +101,7 @@ export default async function MembershipPage() {
               ))}
               {payments?.length === 0 && (
                 <tr>
-                  <td className="px-4 py-3 text-gray-500" colSpan={3}>
+                  <td className="px-4 py-3 text-mist" colSpan={3}>
                     No payments yet.
                   </td>
                 </tr>

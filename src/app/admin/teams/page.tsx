@@ -19,37 +19,37 @@ export default async function AdminTeamsPage() {
           <Link
             key={team.id}
             href={`/admin/teams/${team.id}`}
-            className="rounded-md border border-gray-200 p-3 text-sm hover:bg-gray-50"
+            className="rounded-md border border-line p-3 text-sm hover:bg-white/5"
           >
             <p className="font-medium">{team.name}</p>
             {team.description && (
-              <p className="text-gray-500">{team.description}</p>
+              <p className="text-mist">{team.description}</p>
             )}
           </Link>
         ))}
         {teams?.length === 0 && (
-          <p className="text-sm text-gray-500">No teams yet.</p>
+          <p className="text-sm text-mist">No teams yet.</p>
         )}
       </div>
 
-      <form className="flex flex-col gap-3 rounded-md border border-gray-200 p-4">
+      <form className="flex flex-col gap-3 rounded-md border border-line p-4">
         <h3 className="text-sm font-medium">Create a team</h3>
         <input
           name="name"
           type="text"
           placeholder="Team name"
           required
-          className="rounded-md border border-gray-300 px-3 py-2 text-sm"
-        />
+          className="bg-paper text-navy rounded-md border border-line px-3 py-2 text-sm"
+         />
         <input
           name="description"
           type="text"
           placeholder="Description (optional)"
-          className="rounded-md border border-gray-300 px-3 py-2 text-sm"
-        />
+          className="bg-paper text-navy rounded-md border border-line px-3 py-2 text-sm"
+         />
         <button
           formAction={createTeam}
-          className="rounded-md bg-black px-3 py-2 text-sm font-medium text-white"
+          className="rounded-md bg-crimson px-3 py-2 text-sm font-medium text-white"
         >
           Create Team
         </button>

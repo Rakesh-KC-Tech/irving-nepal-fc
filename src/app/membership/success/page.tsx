@@ -24,14 +24,14 @@ export default async function MembershipSuccessPage({
       <h1 className="text-2xl font-semibold">
         {isPaid ? "Payment Received" : "Processing Payment…"}
       </h1>
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-mist">
         {isPaid
           ? "Thanks! Your membership has been extended."
           : "We're confirming your payment with Stripe — this page will catch up in a moment. Refresh if it doesn't update."}
       </p>
       <Link
         href="/membership"
-        className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white"
+        className="rounded-md bg-crimson px-4 py-2 text-sm font-medium text-white"
       >
         Back to Membership
       </Link>

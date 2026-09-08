@@ -25,8 +25,8 @@ export default async function LoginPage({
             name="email"
             type="email"
             required
-            className="rounded-md border border-gray-300 px-3 py-2"
-          />
+            className="bg-paper text-navy rounded-md border border-line px-3 py-2"
+           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Password
@@ -34,18 +34,18 @@ export default async function LoginPage({
             name="password"
             type="password"
             required
-            className="rounded-md border border-gray-300 px-3 py-2"
-          />
+            className="bg-paper text-navy rounded-md border border-line px-3 py-2"
+           />
         </label>
         <button
           formAction={login}
-          className="rounded-md bg-black px-3 py-2 text-sm font-medium text-white"
+          className="rounded-md bg-crimson px-3 py-2 text-sm font-medium text-white"
         >
           Log in
         </button>
       </form>
 
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-mist">
         Not a member yet?{" "}
         <Link href="/signup" className="underline">
           Apply here

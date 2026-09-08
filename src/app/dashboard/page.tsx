@@ -45,7 +45,7 @@ export default async function DashboardPage() {
         <form>
           <button
             formAction={signout}
-            className="rounded-md border border-gray-300 px-3 py-1.5 text-sm"
+            className="rounded-md border border-line px-3 py-1.5 text-sm"
           >
             Log out
           </button>
@@ -70,7 +70,7 @@ export default async function DashboardPage() {
         </div>
       )}
 
-      <div className="rounded-md border border-gray-200 p-4 text-sm text-gray-700">
+      <div className="rounded-md border border-line p-4 text-sm text-mist">
         <p>Email: {user.email}</p>
         <p>Role: {profile?.role ?? "member"}</p>
         <p>Status: {profile?.status ?? "pending"}</p>
@@ -78,7 +78,7 @@ export default async function DashboardPage() {
 
       <Link
         href="/profile"
-        className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+        className="rounded-md border border-line px-4 py-2 text-center text-sm font-medium"
       >
         Edit Profile
       </Link>
@@ -87,25 +87,25 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-3 gap-3">
           <Link
             href="/teams"
-            className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+            className="rounded-md border border-line px-4 py-2 text-center text-sm font-medium"
           >
             Teams
           </Link>
           <Link
             href="/events"
-            className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+            className="rounded-md border border-line px-4 py-2 text-center text-sm font-medium"
           >
             Events
           </Link>
           <Link
             href="/stats"
-            className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+            className="rounded-md border border-line px-4 py-2 text-center text-sm font-medium"
           >
             Stats
           </Link>
           <Link
             href="/announcements"
-            className="relative rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+            className="relative rounded-md border border-line px-4 py-2 text-center text-sm font-medium"
           >
             Announcements
             {unreadCount > 0 && (
@@ -116,13 +116,13 @@ export default async function DashboardPage() {
           </Link>
           <Link
             href="/documents"
-            className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+            className="rounded-md border border-line px-4 py-2 text-center text-sm font-medium"
           >
             Documents
           </Link>
           <Link
             href="/membership"
-            className="rounded-md border border-gray-300 px-4 py-2 text-center text-sm font-medium"
+            className="rounded-md border border-line px-4 py-2 text-center text-sm font-medium"
           >
             Membership
           </Link>
@@ -132,7 +132,7 @@ export default async function DashboardPage() {
       {profile?.role === "admin" && (
         <Link
           href="/admin"
-          className="rounded-md bg-black px-4 py-2 text-center text-sm font-medium text-white"
+          className="rounded-md bg-crimson px-4 py-2 text-center text-sm font-medium text-white"
         >
           Go to Admin Dashboard
         </Link>

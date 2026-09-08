@@ -3,10 +3,10 @@ import { requireAdmin } from "@/lib/supabase/auth";
 import { setMemberStatus, setMembershipExpiration } from "./actions";
 
 const STATUS_STYLES: Record<string, string> = {
-  pending: "bg-amber-100 text-amber-800",
-  approved: "bg-green-100 text-green-800",
-  rejected: "bg-red-100 text-red-800",
-  suspended: "bg-gray-200 text-gray-700",
+  pending: "bg-gold/15 text-gold",
+  approved: "bg-emerald-500/15 text-emerald-300",
+  rejected: "bg-crimson/15 text-crimson-2",
+  suspended: "bg-white/10 text-mist",
 };
 
 export default async function AdminMembersPage() {
@@ -23,9 +23,9 @@ export default async function AdminMembersPage() {
     <div className="min-w-0 flex flex-col gap-4">
       <h2 className="text-lg font-medium">Members</h2>
 
-      <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
+      <div className="min-w-0 overflow-x-auto rounded-md border border-line">
         <table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+          <thead className="bg-white/5 text-xs uppercase text-mist">
             <tr>
               <th className="px-4 py-2">Name</th>
               <th className="px-4 py-2">Member No.</th>
@@ -37,7 +37,7 @@ export default async function AdminMembersPage() {
           </thead>
           <tbody>
             {members?.map((member) => (
-              <tr key={member.id} className="border-t border-gray-200">
+              <tr key={member.id} className="border-t border-line">
                 <td className="px-4 py-2">
                   <Link
                     href={`/admin/members/${member.id}`}
@@ -63,14 +63,14 @@ export default async function AdminMembersPage() {
                       type="date"
                       name="expiresAt"
                       defaultValue={member.membership_expires_at ?? ""}
-                      className="rounded border border-gray-300 px-1 py-0.5 text-xs"
-                    />
+                      className="bg-paper text-navy rounded border border-line px-1 py-0.5 text-xs"
+                     />
                     <button
                       formAction={setMembershipExpiration.bind(
                         null,
                         member.id,
                       )}
-                      className="rounded-md border border-gray-300 px-2 py-1 text-xs"
+                      className="rounded-md border border-line px-2 py-1 text-xs"
                     >
                       Save
                     </button>
@@ -78,7 +78,7 @@ export default async function AdminMembersPage() {
                 </td>
                 <td className="px-4 py-2">
                   {member.role === "admin" ? (
-                    <span className="text-xs text-gray-400">—</span>
+                    <span className="text-xs text-mist-dim">—</span>
                   ) : (
                     <div className="flex gap-2">
                       <form>
@@ -89,7 +89,7 @@ export default async function AdminMembersPage() {
                             "approved",
                           )}
                           disabled={member.status === "approved"}
-                          className="rounded-md border border-gray-300 px-2 py-1 text-xs disabled:opacity-40"
+                          className="rounded-md border border-line px-2 py-1 text-xs disabled:opacity-40"
                         >
                           Approve
                         </button>
@@ -102,7 +102,7 @@ export default async function AdminMembersPage() {
                             "rejected",
                           )}
                           disabled={member.status === "rejected"}
-                          className="rounded-md border border-gray-300 px-2 py-1 text-xs disabled:opacity-40"
+                          className="rounded-md border border-line px-2 py-1 text-xs disabled:opacity-40"
                         >
                           Reject
                         </button>
@@ -115,7 +115,7 @@ export default async function AdminMembersPage() {
                             "suspended",
                           )}
                           disabled={member.status === "suspended"}
-                          className="rounded-md border border-gray-300 px-2 py-1 text-xs disabled:opacity-40"
+                          className="rounded-md border border-line px-2 py-1 text-xs disabled:opacity-40"
                         >
                           Suspend
                         </button>

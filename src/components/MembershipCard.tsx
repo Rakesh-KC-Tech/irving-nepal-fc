@@ -10,13 +10,13 @@ export function MembershipCard({
   const memberSince = new Date(profile.created_at).getFullYear();
 
   return (
-    <div className="overflow-hidden rounded-xl bg-gradient-to-br from-slate-900 to-slate-800 p-5 text-white shadow-lg">
+    <div className="overflow-hidden rounded-xl border border-line bg-gradient-to-br from-navy-3 to-navy-2 p-5 text-white shadow-lg">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs uppercase tracking-wider text-white/60">
+          <p className="font-oswald text-xs uppercase tracking-wider text-mist">
             Irving Nepal FC
           </p>
-          <p className="text-xs uppercase tracking-wider text-rose-400">
+          <p className="font-oswald text-xs uppercase tracking-wider text-crimson-2">
             Member
           </p>
         </div>
@@ -25,14 +25,14 @@ export function MembershipCard({
         </span>
       </div>
 
-      <p className="mt-6 text-xl font-semibold">
+      <p className="mt-6 font-teko text-2xl font-semibold tracking-wide">
         {profile.full_name ?? email}
       </p>
 
-      <div className="mt-4 flex items-end justify-between text-xs text-white/70">
+      <div className="mt-4 flex items-end justify-between text-xs text-mist">
         <div>
-          <p className="text-white/50">Member No.</p>
-          <p className="font-mono text-sm text-white">
+          <p className="text-mist-dim">Member No.</p>
+          <p className="font-mono text-sm text-gold">
             {profile.member_number ?? "—"}
           </p>
         </div>

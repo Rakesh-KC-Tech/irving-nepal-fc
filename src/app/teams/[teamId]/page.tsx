@@ -41,20 +41,20 @@ export default async function TeamDetailPage({
         </Link>
       </div>
       {team.description && (
-        <p className="text-sm text-gray-500">{team.description}</p>
+        <p className="text-sm text-mist">{team.description}</p>
       )}
 
       <div>
-        <h2 className="mb-2 text-sm font-medium uppercase text-gray-500">
+        <h2 className="mb-2 text-sm font-medium uppercase text-mist">
           Roster
         </h2>
-        <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
+        <div className="min-w-0 overflow-x-auto rounded-md border border-line">
           <table className="w-full text-left text-sm">
             <tbody>
               {roster?.map((member) => (
                 <tr
                   key={member.profile_id}
-                  className="border-t border-gray-100 first:border-t-0"
+                  className="border-t border-line first:border-t-0"
                 >
                   <td className="px-4 py-2">
                     {(
@@ -63,17 +63,17 @@ export default async function TeamDetailPage({
                       }
                     )?.full_name ?? "—"}
                   </td>
-                  <td className="px-4 py-2 text-gray-500">
+                  <td className="px-4 py-2 text-mist">
                     {member.position ?? ""}
                   </td>
-                  <td className="px-4 py-2 text-right text-gray-500">
+                  <td className="px-4 py-2 text-right text-mist">
                     {member.jersey_number ? `#${member.jersey_number}` : ""}
                   </td>
                 </tr>
               ))}
               {roster?.length === 0 && (
                 <tr>
-                  <td className="px-4 py-3 text-gray-500">
+                  <td className="px-4 py-3 text-mist">
                     No players on this team yet.
                   </td>
                 </tr>
@@ -84,7 +84,7 @@ export default async function TeamDetailPage({
       </div>
 
       <div>
-        <h2 className="mb-2 text-sm font-medium uppercase text-gray-500">
+        <h2 className="mb-2 text-sm font-medium uppercase text-mist">
           Upcoming
         </h2>
         <div className="flex flex-col gap-2">
@@ -92,21 +92,21 @@ export default async function TeamDetailPage({
             <Link
               key={event.id}
               href={`/events/${event.id}`}
-              className="flex items-center justify-between rounded-md border border-gray-200 p-3 text-sm hover:bg-gray-50"
+              className="flex items-center justify-between rounded-md border border-line p-3 text-sm hover:bg-white/5"
             >
               <div>
                 <p className="font-medium">{event.title}</p>
-                <p className="text-gray-500">
+                <p className="text-mist">
                   {new Date(event.starts_at).toLocaleString()}
                 </p>
               </div>
-              <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs uppercase">
+              <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs uppercase">
                 {event.type}
               </span>
             </Link>
           ))}
           {upcoming?.length === 0 && (
-            <p className="text-sm text-gray-500">Nothing scheduled.</p>
+            <p className="text-sm text-mist">Nothing scheduled.</p>
           )}
         </div>
       </div>

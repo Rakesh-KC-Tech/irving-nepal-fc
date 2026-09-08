@@ -39,7 +39,7 @@ export default async function EventsPage() {
           return (
             <div
               key={event.id}
-              className="rounded-md border border-gray-200 p-4 text-sm"
+              className="rounded-md border border-line p-4 text-sm"
             >
               <div className="flex items-center justify-between">
                 <Link
@@ -48,11 +48,11 @@ export default async function EventsPage() {
                 >
                   {event.title}
                 </Link>
-                <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs uppercase">
+                <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs uppercase">
                   {event.type}
                 </span>
               </div>
-              <p className="mt-1 text-gray-500">
+              <p className="mt-1 text-mist">
                 {(event.teams as unknown as { name: string })?.name} ·{" "}
                 {new Date(event.starts_at).toLocaleString()}
                 {event.location ? ` · ${event.location}` : ""}
@@ -60,7 +60,7 @@ export default async function EventsPage() {
               </p>
 
               <form className="mt-3 flex items-center gap-2">
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-mist">
                   {myResponse
                     ? `You: ${RSVP_LABEL[myResponse]}`
                     : "RSVP:"}
@@ -71,8 +71,8 @@ export default async function EventsPage() {
                     formAction={setRsvp.bind(null, event.id, option)}
                     className={`rounded-md border px-2 py-1 text-xs ${
                       myResponse === option
-                        ? "border-black bg-black text-white"
-                        : "border-gray-300"
+                        ? "border-black bg-crimson text-white"
+                        : "border-line"
                     }`}
                   >
                     {RSVP_LABEL[option]}
@@ -83,7 +83,7 @@ export default async function EventsPage() {
           );
         })}
         {events?.length === 0 && (
-          <p className="text-sm text-gray-500">Nothing scheduled.</p>
+          <p className="text-sm text-mist">Nothing scheduled.</p>
         )}
       </div>
     </div>

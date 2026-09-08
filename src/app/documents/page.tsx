@@ -25,16 +25,16 @@ export default async function DocumentsPage() {
             href={d.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-md border border-gray-200 p-3 text-sm hover:bg-gray-50"
+            className="rounded-md border border-line p-3 text-sm hover:bg-white/5"
           >
             <p className="font-medium underline">{d.title}</p>
             {d.description && (
-              <p className="text-gray-500">{d.description}</p>
+              <p className="text-mist">{d.description}</p>
             )}
           </a>
         ))}
         {documents?.length === 0 && (
-          <p className="text-sm text-gray-500">No documents yet.</p>
+          <p className="text-sm text-mist">No documents yet.</p>
         )}
       </div>
     </div>

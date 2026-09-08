@@ -33,17 +33,17 @@ export default async function AnnouncementsPage() {
         {announcements?.map((a) => (
           <div
             key={a.id}
-            className="rounded-md border border-gray-200 p-4 text-sm"
+            className="rounded-md border border-line p-4 text-sm"
           >
             <p className="font-medium">{a.title}</p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-mist">
               {new Date(a.created_at).toLocaleString()}
             </p>
-            <p className="mt-2 whitespace-pre-wrap text-gray-700">{a.body}</p>
+            <p className="mt-2 whitespace-pre-wrap text-mist">{a.body}</p>
           </div>
         ))}
         {announcements?.length === 0 && (
-          <p className="text-sm text-gray-500">No announcements yet.</p>
+          <p className="text-sm text-mist">No announcements yet.</p>
         )}
       </div>
     </div>

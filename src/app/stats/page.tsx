@@ -51,9 +51,9 @@ export default async function StatsPage() {
         </Link>
       </div>
 
-      <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
+      <div className="min-w-0 overflow-x-auto rounded-md border border-line">
         <table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+          <thead className="bg-white/5 text-xs uppercase text-mist">
             <tr>
               <th className="px-4 py-2">Player</th>
               <th className="px-4 py-2">Matches</th>
@@ -65,7 +65,7 @@ export default async function StatsPage() {
           </thead>
           <tbody>
             {rows.map((row) => (
-              <tr key={row.name} className="border-t border-gray-100">
+              <tr key={row.name} className="border-t border-line">
                 <td className="px-4 py-2">{row.name}</td>
                 <td className="px-4 py-2">{row.matches}</td>
                 <td className="px-4 py-2">{row.goals}</td>
@@ -76,7 +76,7 @@ export default async function StatsPage() {
             ))}
             {rows.length === 0 && (
               <tr>
-                <td className="px-4 py-3 text-gray-500" colSpan={6}>
+                <td className="px-4 py-3 text-mist" colSpan={6}>
                   No stats recorded yet.
                 </td>
               </tr>

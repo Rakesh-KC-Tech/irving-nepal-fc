@@ -60,9 +60,9 @@ export default async function AdminOverviewPage() {
         {cards.map((card) => (
           <div
             key={card.label}
-            className="rounded-md border border-gray-200 p-4"
+            className="rounded-md border border-line p-4"
           >
-            <p className="text-xs uppercase text-gray-500">{card.label}</p>
+            <p className="text-xs uppercase text-mist">{card.label}</p>
             <p className="mt-1 text-xl font-semibold">{card.value}</p>
           </div>
         ))}
@@ -73,7 +73,7 @@ export default async function AdminOverviewPage() {
           <Link
             key={link.href}
             href={link.href}
-            className="rounded-md border border-gray-300 px-4 py-3 text-center text-sm font-medium hover:bg-gray-50"
+            className="rounded-md border border-line px-4 py-3 text-center text-sm font-medium hover:bg-white/5"
           >
             {link.label}
           </Link>

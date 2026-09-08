@@ -46,7 +46,7 @@ export default async function AdminMemberDetailPage({
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 rounded-md border border-gray-200 p-4 text-sm">
+      <div className="grid grid-cols-2 gap-4 rounded-md border border-line p-4 text-sm">
         <p>Member No.: {member.member_number ?? "—"}</p>
         <p>Role: {member.role}</p>
         <p>Status: {member.status}</p>
@@ -71,14 +71,14 @@ export default async function AdminMemberDetailPage({
       </div>
 
       <div>
-        <h3 className="mb-2 text-sm font-medium uppercase text-gray-500">
+        <h3 className="mb-2 text-sm font-medium uppercase text-mist">
           Teams
         </h3>
         <div className="flex flex-col gap-2">
           {teams?.map((t, i) => (
             <div
               key={i}
-              className="rounded-md border border-gray-200 p-3 text-sm"
+              className="rounded-md border border-line p-3 text-sm"
             >
               {(t.teams as unknown as { name: string })?.name}
               {t.position ? ` — ${t.position}` : ""}
@@ -86,18 +86,18 @@ export default async function AdminMemberDetailPage({
             </div>
           ))}
           {teams?.length === 0 && (
-            <p className="text-sm text-gray-500">Not on any team.</p>
+            <p className="text-sm text-mist">Not on any team.</p>
           )}
         </div>
       </div>
 
       <div>
-        <h3 className="mb-2 text-sm font-medium uppercase text-gray-500">
+        <h3 className="mb-2 text-sm font-medium uppercase text-mist">
           Payment History
         </h3>
-        <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
+        <div className="min-w-0 overflow-x-auto rounded-md border border-line">
           <table className="w-full text-left text-sm">
-            <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+            <thead className="bg-white/5 text-xs uppercase text-mist">
               <tr>
                 <th className="px-4 py-2">Date</th>
                 <th className="px-4 py-2">Amount</th>
@@ -106,7 +106,7 @@ export default async function AdminMemberDetailPage({
             </thead>
             <tbody>
               {payments?.map((p) => (
-                <tr key={p.id} className="border-t border-gray-100">
+                <tr key={p.id} className="border-t border-line">
                   <td className="px-4 py-2">
                     {new Date(p.created_at).toLocaleString()}
                   </td>
@@ -116,7 +116,7 @@ export default async function AdminMemberDetailPage({
               ))}
               {payments?.length === 0 && (
                 <tr>
-                  <td className="px-4 py-3 text-gray-500" colSpan={3}>
+                  <td className="px-4 py-3 text-mist" colSpan={3}>
                     No payments yet.
                   </td>
                 </tr>

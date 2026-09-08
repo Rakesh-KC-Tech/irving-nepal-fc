@@ -66,7 +66,7 @@ export default async function AdminEventDetailPage({
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-medium">{event.title}</h2>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-mist">
             {(event.teams as unknown as { name: string })?.name} ·{" "}
             {new Date(event.starts_at).toLocaleString()}
             {event.location ? ` · ${event.location}` : ""}
@@ -78,29 +78,29 @@ export default async function AdminEventDetailPage({
         </Link>
       </div>
 
-      <div className="min-w-0 overflow-x-auto rounded-md border border-gray-200">
+      <div className="min-w-0 overflow-x-auto rounded-md border border-line">
         <div className={`grid ${gridCols} gap-x-3 gap-y-2 p-3 text-sm`}>
-          <div className="text-xs font-medium uppercase text-gray-500">
+          <div className="text-xs font-medium uppercase text-mist">
             Name
           </div>
-          <div className="text-xs font-medium uppercase text-gray-500">
+          <div className="text-xs font-medium uppercase text-mist">
             RSVP
           </div>
-          <div className="text-xs font-medium uppercase text-gray-500">
+          <div className="text-xs font-medium uppercase text-mist">
             Attended
           </div>
           {isMatch && (
             <>
-              <div className="text-xs font-medium uppercase text-gray-500">
+              <div className="text-xs font-medium uppercase text-mist">
                 Goals
               </div>
-              <div className="text-xs font-medium uppercase text-gray-500">
+              <div className="text-xs font-medium uppercase text-mist">
                 Assists
               </div>
-              <div className="text-xs font-medium uppercase text-gray-500">
+              <div className="text-xs font-medium uppercase text-mist">
                 YC
               </div>
-              <div className="text-xs font-medium uppercase text-gray-500">
+              <div className="text-xs font-medium uppercase text-mist">
                 RC
               </div>
             </>
@@ -112,7 +112,7 @@ export default async function AdminEventDetailPage({
             return (
               <form
                 key={member.profile_id}
-                className={`col-span-full grid ${gridCols} items-center gap-x-3 border-t border-gray-100 py-2`}
+                className={`col-span-full grid ${gridCols} items-center gap-x-3 border-t border-line py-2`}
               >
                 <div>
                   {(
@@ -139,32 +139,32 @@ export default async function AdminEventDetailPage({
                         name="goals"
                         type="number"
                         defaultValue={stat?.goals ?? 0}
-                        className="w-14 rounded border border-gray-300 px-1 py-0.5"
-                      />
+                        className="bg-paper text-navy w-14 rounded border border-line px-1 py-0.5"
+                       />
                     </div>
                     <div>
                       <input
                         name="assists"
                         type="number"
                         defaultValue={stat?.assists ?? 0}
-                        className="w-14 rounded border border-gray-300 px-1 py-0.5"
-                      />
+                        className="bg-paper text-navy w-14 rounded border border-line px-1 py-0.5"
+                       />
                     </div>
                     <div>
                       <input
                         name="yellowCards"
                         type="number"
                         defaultValue={stat?.yellow_cards ?? 0}
-                        className="w-12 rounded border border-gray-300 px-1 py-0.5"
-                      />
+                        className="bg-paper text-navy w-12 rounded border border-line px-1 py-0.5"
+                       />
                     </div>
                     <div>
                       <input
                         name="redCards"
                         type="number"
                         defaultValue={stat?.red_cards ?? 0}
-                        className="w-12 rounded border border-gray-300 px-1 py-0.5"
-                      />
+                        className="bg-paper text-navy w-12 rounded border border-line px-1 py-0.5"
+                       />
                     </div>
                   </>
                 )}
@@ -175,7 +175,7 @@ export default async function AdminEventDetailPage({
                       eventId,
                       member.profile_id,
                     )}
-                    className="rounded-md border border-gray-300 px-2 py-1 text-xs"
+                    className="rounded-md border border-line px-2 py-1 text-xs"
                   >
                     Save attendance
                   </button>
@@ -186,7 +186,7 @@ export default async function AdminEventDetailPage({
                         eventId,
                         member.profile_id,
                       )}
-                      className="rounded-md border border-gray-300 px-2 py-1 text-xs"
+                      className="rounded-md border border-line px-2 py-1 text-xs"
                     >
                       Save stats
                     </button>

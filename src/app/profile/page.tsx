@@ -14,7 +14,7 @@ export default async function ProfilePage() {
         </Link>
       </div>
 
-      <p className="text-sm text-gray-500">{user.email}</p>
+      <p className="text-sm text-mist">{user.email}</p>
 
       <form className="flex flex-col gap-4">
         <label className="flex flex-col gap-1 text-sm">
@@ -23,8 +23,8 @@ export default async function ProfilePage() {
             name="fullName"
             type="text"
             defaultValue={profile?.full_name ?? ""}
-            className="rounded-md border border-gray-300 px-3 py-2"
-          />
+            className="bg-paper text-navy rounded-md border border-line px-3 py-2"
+           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Phone
@@ -32,8 +32,8 @@ export default async function ProfilePage() {
             name="phone"
             type="tel"
             defaultValue={profile?.phone ?? ""}
-            className="rounded-md border border-gray-300 px-3 py-2"
-          />
+            className="bg-paper text-navy rounded-md border border-line px-3 py-2"
+           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Date of birth
@@ -41,8 +41,8 @@ export default async function ProfilePage() {
             name="dateOfBirth"
             type="date"
             defaultValue={profile?.date_of_birth ?? ""}
-            className="rounded-md border border-gray-300 px-3 py-2"
-          />
+            className="bg-paper text-navy rounded-md border border-line px-3 py-2"
+           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Emergency contact name
@@ -50,8 +50,8 @@ export default async function ProfilePage() {
             name="emergencyContactName"
             type="text"
             defaultValue={profile?.emergency_contact_name ?? ""}
-            className="rounded-md border border-gray-300 px-3 py-2"
-          />
+            className="bg-paper text-navy rounded-md border border-line px-3 py-2"
+           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Emergency contact phone
@@ -59,12 +59,12 @@ export default async function ProfilePage() {
             name="emergencyContactPhone"
             type="tel"
             defaultValue={profile?.emergency_contact_phone ?? ""}
-            className="rounded-md border border-gray-300 px-3 py-2"
-          />
+            className="bg-paper text-navy rounded-md border border-line px-3 py-2"
+           />
         </label>
         <button
           formAction={updateProfile}
-          className="rounded-md bg-black px-3 py-2 text-sm font-medium text-white"
+          className="rounded-md bg-crimson px-3 py-2 text-sm font-medium text-white"
         >
           Save
         </button>
