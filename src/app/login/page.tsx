@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { login } from "./actions";
 
@@ -10,10 +11,13 @@ export default async function LoginPage({
 
   return (
     <div className="mx-auto flex w-full min-w-0 min-h-screen max-w-sm flex-col justify-center gap-6 px-4">
-      <h1 className="text-2xl font-semibold">Member Login</h1>
+      <div className="flex flex-col items-center gap-3">
+        <Image src="/crest.png" alt="Irving Nepal FC crest" width={72} height={72} priority />
+        <h1 className="text-2xl font-semibold">Member Login</h1>
+      </div>
 
       {error && (
-        <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p className="rounded-md bg-crimson/10 px-3 py-2 text-sm text-crimson-2">
           {error}
         </p>
       )}

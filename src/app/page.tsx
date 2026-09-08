@@ -1,8 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="mx-auto flex w-full min-w-0 min-h-screen max-w-2xl flex-col items-center justify-center gap-6 px-4 text-center">
+      <Image src="/crest.png" alt="Irving Nepal FC crest" width={120} height={120} priority />
       <h1 className="text-3xl font-semibold">Irving Nepal FC Member Portal</h1>
       <p className="text-mist">
         Manage your membership, teams, matches, and payments in one place.

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { requireUser } from "@/lib/supabase/auth";
 import { MembershipCard } from "@/components/MembershipCard";
@@ -39,9 +40,12 @@ export default async function DashboardPage() {
   return (
     <div className="mx-auto flex w-full min-w-0 min-h-screen max-w-2xl flex-col gap-6 px-4 py-12">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">
-          Welcome{profile?.full_name ? `, ${profile.full_name}` : ""}
-        </h1>
+        <div className="flex items-center gap-3">
+          <Image src="/crest.png" alt="Irving Nepal FC crest" width={40} height={40} />
+          <h1 className="text-2xl font-semibold">
+            Welcome{profile?.full_name ? `, ${profile.full_name}` : ""}
+          </h1>
+        </div>
         <form>
           <button
             formAction={signout}
@@ -53,7 +57,7 @@ export default async function DashboardPage() {
       </div>
 
       {!isApproved && (
-        <div className="rounded-md bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        <div className="rounded-md bg-gold/10 px-4 py-3 text-sm text-gold">
           {STATUS_MESSAGE[profile?.status ?? "pending"]}
         </div>
       )}
@@ -63,7 +67,7 @@ export default async function DashboardPage() {
       )}
 
       {isApproved && daysUntilExpiry !== null && daysUntilExpiry <= 30 && (
-        <div className="rounded-md bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        <div className="rounded-md bg-gold/10 px-4 py-3 text-sm text-gold">
           {daysUntilExpiry < 0
             ? "Your membership has expired. Contact the club to renew."
             : `Your membership expires in ${daysUntilExpiry} day${daysUntilExpiry === 1 ? "" : "s"}.`}

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { requireAdmin } from "@/lib/supabase/auth";
 import { signout } from "../login/actions";
@@ -12,7 +13,8 @@ export default async function AdminLayout({
   return (
     <div className="mx-auto flex w-full min-w-0 min-h-screen max-w-4xl flex-col gap-6 px-4 py-12">
       <div className="flex items-center justify-between">
-        <Link href="/admin" className="text-2xl font-semibold">
+        <Link href="/admin" className="flex items-center gap-2 text-2xl font-semibold">
+          <Image src="/crest.png" alt="Irving Nepal FC crest" width={32} height={32} />
           Admin
         </Link>
         <div className="flex items-center gap-3">
