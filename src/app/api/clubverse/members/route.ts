@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { getMembers, ClubverseError } from "@/lib/clubverse";
 
-// Public feed used only to match the marketing site's curated roster to a
-// real ClubVerse photo by name. Deliberately returns just name + photoUrl —
-// never role, position, join date, or (obviously) email/phone — even though
-// this key isn't scoped for contact info anyway.
+// Public feed of the club directory: name, photo, board/member role, and
+// playing position. Deliberately never returns join date or contact info
+// (email/phone) — this key isn't even scoped for those, but the route
+// stays minimal on purpose regardless.
 const STORE_ORIGIN = process.env.STORE_SITE_URL ?? "https://irvingnepalfc.com";
 
 const CORS_HEADERS = {
@@ -20,10 +20,13 @@ export async function OPTIONS() {
 export async function GET() {
   try {
     const data = await getMembers({ limit: 200 });
-    const members = data.members
-      .filter((m) => m.photoUrl)
-      .map((m) => ({ name: m.name, photoUrl: m.photoUrl }));
-    return NextResponse.json({ members }, { headers: CORS_HEADERS });
+    const members = data.members.map((m) => ({
+      name: m.name,
+      photoUrl: m.photoUrl,
+      role: m.role,
+      position: m.position,
+    }));
+    return NextResponse.json({ members, total: data.total }, { headers: CORS_HEADERS });
   } catch (err) {
     const status = err instanceof ClubverseError ? err.status : 500;
     return NextResponse.json({ error: "Failed to load members" }, { status, headers: CORS_HEADERS });
