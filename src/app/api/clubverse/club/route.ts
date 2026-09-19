@@ -22,6 +22,7 @@ export async function GET() {
     return NextResponse.json(data, { headers: CORS_HEADERS });
   } catch (err) {
     const status = err instanceof ClubverseError ? err.status : 500;
-    return NextResponse.json({ error: "Failed to load club info" }, { status, headers: CORS_HEADERS });
+    const detail = err instanceof ClubverseError ? { code: err.code, message: err.message } : { message: String(err) };
+    return NextResponse.json({ error: "Failed to load club info", detail }, { status, headers: CORS_HEADERS });
   }
 }
