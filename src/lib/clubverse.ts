@@ -84,6 +84,19 @@ export function getTournaments() {
   }>("/tournaments");
 }
 
+export type ClubverseMember = {
+  id: string;
+  name: string;
+  photoUrl: string | null;
+  role: "board" | "member";
+  position: string | null;
+  memberType: "regular" | "student";
+};
+
+export function getMembers(opts?: { role?: "board" | "member"; limit?: number; offset?: number }) {
+  return clubverseFetch<{ members: ClubverseMember[]; total: number; limit: number; offset: number }>("/members", opts);
+}
+
 export function getClub() {
   return clubverseFetch<{
     club: {
