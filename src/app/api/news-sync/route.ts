@@ -3,6 +3,8 @@ import { createServiceClient } from "@/lib/supabase/service";
 import { slugify } from "@/lib/news";
 import { fetchLatestYoutubeVideos } from "@/lib/news-ingest/youtube";
 import { rewriteAsArticle } from "@/lib/news-ingest/rewrite";
+import { getGames, getTournaments } from "@/lib/clubverse";
+import { buildMatchReport } from "@/lib/news-ingest/clubverse-news";
 
 // Triggered by Vercel Cron (see vercel.json). Pulls the latest posts from
 // each connected official account, skips anything already logged in
@@ -105,6 +107,77 @@ export async function GET(request: NextRequest) {
   // Instagram/Facebook ingestion requires a Meta Developer App + page
   // access token, which the club needs to set up on their own — wired up
   // once IG_ACCESS_TOKEN / FB_ACCESS_TOKEN are available.
+
+  if (process.env.CLUBVERSE_API_KEY) {
+    try {
+      const [gamesData, tournamentsData] = await Promise.all([
+        getGames({ recent: 20, upcoming: 1 }),
+        getTournaments(),
+      ]);
+      const slugByTournamentId = new Map(
+        tournamentsData.career.history.map((t) => [t.tournamentId, t.publicSlug]),
+      );
+
+      for (const game of gamesData.recent) {
+        if (game.source !== "tournament") continue;
+
+        const { data: existing } = await supabase
+          .from("social_ingest_log")
+          .select("id")
+          .eq("platform", "clubverse")
+          .eq("external_id", game.id)
+          .maybeSingle();
+
+        if (existing) {
+          results.push({ platform: "clubverse", externalId: game.id, outcome: "already_processed" });
+          continue;
+        }
+
+        const draft = buildMatchReport(game, game.tournamentId ? (slugByTournamentId.get(game.tournamentId) ?? null) : null);
+
+        if (!draft) {
+          await supabase.from("social_ingest_log").insert({
+            platform: "clubverse",
+            external_id: game.id,
+            outcome: "skipped",
+            detail: "Not a completed, scored tournament match involving the club",
+            raw_snapshot: game,
+          });
+          results.push({ platform: "clubverse", externalId: game.id, outcome: "skipped" });
+          continue;
+        }
+
+        const { data: article, error: insertError } = await supabase
+          .from("news_articles")
+          .insert({
+            slug: slugify(draft.headline),
+            headline: draft.headline,
+            category: draft.category,
+            excerpt: draft.excerpt,
+            body: draft.body,
+            tags: draft.tags,
+            status: "draft",
+            source_platform: "clubverse",
+            source_url: draft.sourceUrl,
+          })
+          .select("id")
+          .single();
+
+        await supabase.from("social_ingest_log").insert({
+          platform: "clubverse",
+          external_id: game.id,
+          outcome: insertError ? "error" : "drafted",
+          article_id: article?.id ?? null,
+          detail: insertError ? insertError.message : "Drafted for review",
+          raw_snapshot: game,
+        });
+
+        results.push({ platform: "clubverse", externalId: game.id, outcome: insertError ? "error" : "drafted" });
+      }
+    } catch (err) {
+      results.push({ platform: "clubverse", externalId: "n/a", outcome: `fetch_error: ${err}` });
+    }
+  }
 
   return NextResponse.json({ results });
 }
