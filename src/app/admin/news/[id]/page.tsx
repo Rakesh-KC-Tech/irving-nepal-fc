@@ -14,7 +14,7 @@ export default async function EditArticlePage({
   const { data: article } = await supabase
     .from("news_articles")
     .select(
-      "id, headline, category, excerpt, body, featured_image_url, source_url, source_platform, tags, status",
+      "id, headline, category, excerpt, body, featured_image_url, source_url, source_platform, tags, status, is_announcement",
     )
     .eq("id", id)
     .single();

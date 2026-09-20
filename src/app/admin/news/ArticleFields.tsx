@@ -11,6 +11,7 @@ export function ArticleFields({
     featured_image_url?: string | null;
     source_url?: string | null;
     tags?: string[];
+    is_announcement?: boolean;
   };
 }) {
   return (
@@ -96,6 +97,20 @@ export function ArticleFields({
           className="bg-paper text-navy rounded-md border border-line px-3 py-2"
         />
       </label>
+
+      <label className="flex items-center gap-2 text-sm">
+        <input
+          name="is_announcement"
+          type="checkbox"
+          defaultChecked={defaults?.is_announcement ?? false}
+          className="h-4 w-4"
+        />
+        Show as a site-wide announcement popup when published
+      </label>
+      <p className="text-xs text-mist -mt-3">
+        Only check this for genuinely important updates (cancellations, deadlines, major announcements) —
+        it interrupts every visitor once per browsing session. Most articles shouldn&apos;t use this.
+      </p>
     </>
   );
 }

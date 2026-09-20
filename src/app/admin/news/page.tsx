@@ -7,7 +7,7 @@ export default async function AdminNewsPage() {
 
   const { data: articles } = await supabase
     .from("news_articles")
-    .select("id, headline, category, status, source_platform, published_at, created_at")
+    .select("id, headline, category, status, source_platform, published_at, created_at, is_announcement")
     .order("created_at", { ascending: false });
 
   const drafts = articles?.filter((a) => a.status === "draft") ?? [];
@@ -63,13 +63,17 @@ type Row = {
   source_platform: string | null;
   published_at: string | null;
   created_at: string;
+  is_announcement: boolean;
 };
 
 function ArticleRow({ article }: { article: Row }) {
   return (
     <div className="flex items-center justify-between gap-3 rounded-md border border-line p-3 text-sm">
       <div className="min-w-0">
-        <p className="font-medium truncate">{article.headline}</p>
+        <p className="font-medium truncate">
+          {article.is_announcement && <span title="Shows as a site announcement popup">📢 </span>}
+          {article.headline}
+        </p>
         <p className="text-xs text-mist">
           {article.category}
           {article.source_platform && article.source_platform !== "manual" && (

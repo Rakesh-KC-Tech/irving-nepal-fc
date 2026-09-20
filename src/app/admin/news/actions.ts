@@ -26,6 +26,7 @@ export async function createArticle(formData: FormData) {
     .map((t) => t.trim())
     .filter(Boolean);
   const publishNow = formData.get("publish") === "on";
+  const is_announcement = formData.get("is_announcement") === "on";
   const slug = slugify(headline);
 
   const { data: article } = await supabase
@@ -40,6 +41,7 @@ export async function createArticle(formData: FormData) {
       source_url,
       source_platform: "manual",
       tags,
+      is_announcement,
       status: publishNow ? "published" : "draft",
       published_at: publishNow ? new Date().toISOString() : null,
       created_by: user.id,
@@ -68,10 +70,11 @@ export async function updateArticle(articleId: string, formData: FormData) {
     .split(",")
     .map((t) => t.trim())
     .filter(Boolean);
+  const is_announcement = formData.get("is_announcement") === "on";
 
   const { data: article } = await supabase
     .from("news_articles")
-    .update({ headline, category, excerpt, body, featured_image_url, source_url, tags })
+    .update({ headline, category, excerpt, body, featured_image_url, source_url, tags, is_announcement })
     .eq("id", articleId)
     .select("slug")
     .single();
