@@ -16,6 +16,7 @@ type Registration = {
   amount_cents: number | null;
   payment_status: string;
   paid_at: string | null;
+  invoice_url: string | null;
   created_at: string;
 };
 
@@ -46,7 +47,7 @@ export default async function AdminRegistrationsPage() {
   const { data: registrations } = await supabase
     .from("registrations")
     .select(
-      "id, first_name, last_name, email, phone, date_of_birth, plan, preferred_position, notes, status, linked_profile_id, amount_cents, payment_status, paid_at, created_at",
+      "id, first_name, last_name, email, phone, date_of_birth, plan, preferred_position, notes, status, linked_profile_id, amount_cents, payment_status, paid_at, invoice_url, created_at",
     )
     .order("created_at", { ascending: false })
     .returns<Registration[]>();
@@ -77,6 +78,11 @@ export default async function AdminRegistrationsPage() {
                     ? ` · ${new Date(r.paid_at).toLocaleDateString()}`
                     : ""}
                 </span>
+                {r.invoice_url && (
+                  <a href={r.invoice_url} target="_blank" rel="noopener" className="text-xs underline text-sky-300">
+                    View invoice
+                  </a>
+                )}
                 <span className={`rounded-full px-2 py-0.5 text-xs ${STATUS_STYLES[r.status] ?? ""}`}>
                   {r.status}
                 </span>

@@ -30,11 +30,21 @@ export async function POST(request: NextRequest) {
     if (registrationId) {
       const supabase = createServiceClient();
 
+      let stripeInvoiceId: string | null = null;
+      let invoiceUrl: string | null = null;
+      if (session.invoice) {
+        const invoice = await stripe.invoices.retrieve(session.invoice as string);
+        stripeInvoiceId = invoice.id ?? null;
+        invoiceUrl = invoice.hosted_invoice_url ?? null;
+      }
+
       await supabase
         .from("registrations")
         .update({
           payment_status: "paid",
           paid_at: new Date().toISOString(),
+          stripe_invoice_id: stripeInvoiceId,
+          invoice_url: invoiceUrl,
         })
         .eq("id", registrationId)
         .eq("stripe_checkout_session_id", session.id);

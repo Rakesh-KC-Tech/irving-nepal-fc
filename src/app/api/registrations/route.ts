@@ -97,6 +97,8 @@ export async function POST(request: NextRequest) {
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
+    customer_email: email,
+    invoice_creation: { enabled: true },
     line_items: [
       {
         price_data: {
