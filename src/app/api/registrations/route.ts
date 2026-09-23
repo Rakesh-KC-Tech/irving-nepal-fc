@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/service";
+import { stripe } from "@/lib/stripe";
+import { getClub } from "@/lib/clubverse";
 
 // The "Join The Club" form lives on the static marketing site, which has
 // no backend of its own, so it posts here cross-origin. There's no logged
@@ -44,24 +46,82 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const supabase = createServiceClient();
-  const { error } = await supabase.from("registrations").insert({
-    first_name: firstName,
-    last_name: lastName,
-    email,
-    phone,
-    date_of_birth: dateOfBirth,
-    plan,
-    preferred_position: preferredPosition || null,
-    notes: notes || null,
-  });
+  // Pricing comes from ClubVerse (live), not a hardcoded number, so a fee
+  // change there is reflected here automatically like everywhere else.
+  let amountCents: number;
+  try {
+    const { club } = await getClub();
+    const dollars =
+      plan === "Membership"
+        ? club.membershipPlan.feeAmount
+        : plan === "Student Membership"
+          ? club.membershipPlan.studentFeeAmount
+          : null;
+    if (dollars == null) {
+      return NextResponse.json(
+        { error: "Unknown plan" },
+        { status: 400, headers: CORS_HEADERS },
+      );
+    }
+    amountCents = Math.round(dollars * 100);
+  } catch {
+    return NextResponse.json(
+      { error: "Unable to determine plan pricing right now" },
+      { status: 503, headers: CORS_HEADERS },
+    );
+  }
 
-  if (error) {
+  const supabase = createServiceClient();
+  const { data: registration, error } = await supabase
+    .from("registrations")
+    .insert({
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      phone,
+      date_of_birth: dateOfBirth,
+      plan,
+      preferred_position: preferredPosition || null,
+      notes: notes || null,
+      amount_cents: amountCents,
+    })
+    .select("id")
+    .single();
+
+  if (error || !registration) {
     return NextResponse.json(
       { error: "Failed to save registration" },
       { status: 500, headers: CORS_HEADERS },
     );
   }
 
-  return NextResponse.json({ ok: true }, { status: 201, headers: CORS_HEADERS });
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          unit_amount: amountCents,
+          product_data: {
+            name: `${plan} — Irving Nepal FC`,
+            description: `${firstName} ${lastName}`,
+          },
+        },
+        quantity: 1,
+      },
+    ],
+    metadata: { registration_id: registration.id },
+    success_url: `${STORE_ORIGIN}/?registration=success`,
+    cancel_url: `${STORE_ORIGIN}/?registration=cancelled`,
+  });
+
+  await supabase
+    .from("registrations")
+    .update({ stripe_checkout_session_id: session.id })
+    .eq("id", registration.id);
+
+  return NextResponse.json(
+    { ok: true, checkoutUrl: session.url },
+    { status: 201, headers: CORS_HEADERS },
+  );
 }

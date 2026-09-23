@@ -25,6 +25,20 @@ export async function POST(request: NextRequest) {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
     const profileId = session.metadata?.profile_id;
+    const registrationId = session.metadata?.registration_id;
+
+    if (registrationId) {
+      const supabase = createServiceClient();
+
+      await supabase
+        .from("registrations")
+        .update({
+          payment_status: "paid",
+          paid_at: new Date().toISOString(),
+        })
+        .eq("id", registrationId)
+        .eq("stripe_checkout_session_id", session.id);
+    }
 
     if (profileId) {
       const supabase = createServiceClient();

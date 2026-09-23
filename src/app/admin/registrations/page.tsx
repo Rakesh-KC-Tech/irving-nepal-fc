@@ -13,6 +13,9 @@ type Registration = {
   notes: string | null;
   status: string;
   linked_profile_id: string | null;
+  amount_cents: number | null;
+  payment_status: string;
+  paid_at: string | null;
   created_at: string;
 };
 
@@ -22,6 +25,15 @@ const STATUS_STYLES: Record<string, string> = {
   converted: "bg-emerald-500/15 text-emerald-300",
   archived: "bg-white/10 text-mist",
 };
+
+const PAYMENT_STYLES: Record<string, string> = {
+  paid: "bg-emerald-500/15 text-emerald-300",
+  unpaid: "bg-crimson/15 text-crimson-2",
+};
+
+function formatCents(cents: number) {
+  return `$${(cents / 100).toFixed(2)}`;
+}
 
 // "converted" only happens through convertRegistrationToAccount below, which
 // has real side effects (sends an invite email, creates the account) — it's
@@ -34,7 +46,7 @@ export default async function AdminRegistrationsPage() {
   const { data: registrations } = await supabase
     .from("registrations")
     .select(
-      "id, first_name, last_name, email, phone, date_of_birth, plan, preferred_position, notes, status, linked_profile_id, created_at",
+      "id, first_name, last_name, email, phone, date_of_birth, plan, preferred_position, notes, status, linked_profile_id, amount_cents, payment_status, paid_at, created_at",
     )
     .order("created_at", { ascending: false })
     .returns<Registration[]>();
@@ -58,12 +70,21 @@ export default async function AdminRegistrationsPage() {
                   {r.email} · {r.phone} · DOB {r.date_of_birth}
                 </p>
               </div>
-              <span className={`rounded-full px-2 py-0.5 text-xs ${STATUS_STYLES[r.status] ?? ""}`}>
-                {r.status}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className={`rounded-full px-2 py-0.5 text-xs ${PAYMENT_STYLES[r.payment_status] ?? ""}`}>
+                  {r.payment_status}
+                  {r.payment_status === "paid" && r.paid_at
+                    ? ` · ${new Date(r.paid_at).toLocaleDateString()}`
+                    : ""}
+                </span>
+                <span className={`rounded-full px-2 py-0.5 text-xs ${STATUS_STYLES[r.status] ?? ""}`}>
+                  {r.status}
+                </span>
+              </div>
             </div>
             <p className="mt-2 text-xs text-mist">
               Plan: <span className="text-white">{r.plan}</span>
+              {r.amount_cents != null && <> ({formatCents(r.amount_cents)})</>}
               {r.preferred_position && (
                 <>
                   {" "}
