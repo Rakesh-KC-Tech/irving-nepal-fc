@@ -1,5 +1,5 @@
 import { requireAdmin } from "@/lib/supabase/auth";
-import { setRegistrationStatus } from "./actions";
+import { setRegistrationStatus, convertRegistrationToAccount } from "./actions";
 
 type Registration = {
   id: string;
@@ -12,6 +12,7 @@ type Registration = {
   preferred_position: string | null;
   notes: string | null;
   status: string;
+  linked_profile_id: string | null;
   created_at: string;
 };
 
@@ -22,7 +23,10 @@ const STATUS_STYLES: Record<string, string> = {
   archived: "bg-white/10 text-mist",
 };
 
-const STATUS_OPTIONS = ["new", "contacted", "converted", "archived"];
+// "converted" only happens through convertRegistrationToAccount below, which
+// has real side effects (sends an invite email, creates the account) — it's
+// deliberately not one of the plain status buttons.
+const STATUS_OPTIONS = ["new", "contacted", "archived"];
 
 export default async function AdminRegistrationsPage() {
   const { supabase } = await requireAdmin();
@@ -30,7 +34,7 @@ export default async function AdminRegistrationsPage() {
   const { data: registrations } = await supabase
     .from("registrations")
     .select(
-      "id, first_name, last_name, email, phone, date_of_birth, plan, preferred_position, notes, status, created_at",
+      "id, first_name, last_name, email, phone, date_of_birth, plan, preferred_position, notes, status, linked_profile_id, created_at",
     )
     .order("created_at", { ascending: false })
     .returns<Registration[]>();
@@ -70,7 +74,21 @@ export default async function AdminRegistrationsPage() {
               Submitted {new Date(r.created_at).toLocaleString()}
             </p>
             {r.notes && <p className="mt-2 text-xs text-mist">Notes: {r.notes}</p>}
-            <form className="mt-3 flex items-center gap-2">
+            {r.linked_profile_id ? (
+              <p className="mt-3 text-xs text-green-500">
+                Account created — invite sent to {r.email}.
+              </p>
+            ) : (
+              <form className="mt-3">
+                <button
+                  formAction={convertRegistrationToAccount.bind(null, r.id)}
+                  className="text-xs underline text-green-500"
+                >
+                  Convert &amp; create account
+                </button>
+              </form>
+            )}
+            <form className="mt-2 flex items-center gap-2">
               <span className="text-xs text-mist">Mark as:</span>
               {STATUS_OPTIONS.filter((s) => s !== r.status).map((s) => (
                 <button
