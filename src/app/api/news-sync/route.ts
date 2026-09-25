@@ -172,6 +172,7 @@ export async function GET(request: NextRequest) {
             status: "draft",
             source_platform: "clubverse",
             source_url: draft.sourceUrl,
+            source_game_id: game.id,
           })
           .select("id")
           .single();

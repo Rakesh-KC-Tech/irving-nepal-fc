@@ -19,7 +19,7 @@ export default async function NewsArticlePage({
 
   const { data: article } = await supabase
     .from("news_articles")
-    .select("headline, category, excerpt, body, featured_image_url, tags, source_platform, source_url, published_at")
+    .select("headline, category, excerpt, body, featured_image_url, tags, source_platform, source_url, source_game_id, published_at")
     .eq("slug", slug)
     .eq("status", "published")
     .single();
@@ -63,6 +63,15 @@ export default async function NewsArticlePage({
 
         <p className="text-lg text-mist mt-6">{article.excerpt}</p>
         <div className="mt-4 whitespace-pre-wrap leading-relaxed text-white/90">{article.body}</div>
+
+        {article.source_game_id && (
+          <a
+            href={`https://irvingnepalfc.com/?view=fixtures&game=${encodeURIComponent(article.source_game_id)}`}
+            className="inline-flex items-center gap-2 mt-8 rounded-md bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-2 transition-colors"
+          >
+            View This Match in Fixtures &amp; Calendar →
+          </a>
+        )}
 
         {article.source_url && article.source_platform && article.source_platform !== "manual" && (
           <a
