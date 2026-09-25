@@ -5,6 +5,7 @@ import { fetchLatestYoutubeVideos } from "@/lib/news-ingest/youtube";
 import { rewriteAsArticle } from "@/lib/news-ingest/rewrite";
 import { getGames, getTournaments } from "@/lib/clubverse";
 import { buildMatchReport } from "@/lib/news-ingest/clubverse-news";
+import { generateMatchGraphic, uploadMatchGraphic } from "@/lib/news-ingest/match-graphic";
 
 // Triggered by Vercel Cron (see vercel.json). Pulls the latest posts from
 // each connected official account, skips anything already logged in
@@ -147,6 +148,17 @@ export async function GET(request: NextRequest) {
           continue;
         }
 
+        // A designed final-score graphic (real crests + real score) rather
+        // than a fabricated match photo — failure here shouldn't block the
+        // article draft itself, just leave it without an image.
+        let featuredImageUrl: string | null = null;
+        try {
+          const graphicBuffer = await generateMatchGraphic(game);
+          featuredImageUrl = await uploadMatchGraphic(game.id, graphicBuffer);
+        } catch {
+          featuredImageUrl = null;
+        }
+
         const { data: article, error: insertError } = await supabase
           .from("news_articles")
           .insert({
@@ -155,6 +167,7 @@ export async function GET(request: NextRequest) {
             category: draft.category,
             excerpt: draft.excerpt,
             body: draft.body,
+            featured_image_url: featuredImageUrl,
             tags: draft.tags,
             status: "draft",
             source_platform: "clubverse",
