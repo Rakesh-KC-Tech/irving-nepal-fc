@@ -1,9 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { NEWS_CATEGORIES } from "@/lib/news";
 
 const PAGE_SIZE = 9;
+
+export const metadata: Metadata = {
+  title: "Club News | Irving Nepal FC",
+  description: "Match updates, tournaments, announcements, and everything happening at Irving Nepal FC.",
+  alternates: { canonical: "https://portal.irvingnepalfc.com/news" },
+  openGraph: {
+    title: "Club News | Irving Nepal FC",
+    description: "Match updates, tournaments, announcements, and everything happening at Irving Nepal FC.",
+    url: "https://portal.irvingnepalfc.com/news",
+    siteName: "Irving Nepal FC",
+    images: ["https://portal.irvingnepalfc.com/crest.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Club News | Irving Nepal FC",
+    description: "Match updates, tournaments, announcements, and everything happening at Irving Nepal FC.",
+    images: ["https://portal.irvingnepalfc.com/crest.png"],
+  },
+};
 
 export default async function NewsPage({
   searchParams,
@@ -97,7 +117,7 @@ export default async function NewsPage({
           >
             {featured.featured_image_url && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={featured.featured_image_url} alt="" className="w-full h-72 object-cover" />
+              <img src={featured.featured_image_url} alt={featured.headline} className="w-full h-72 object-cover" />
             )}
             <div className="p-6">
               <span className="text-xs uppercase tracking-wide text-crimson-2">{featured.category}</span>
@@ -119,7 +139,7 @@ export default async function NewsPage({
             >
               {a!.featured_image_url ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={a!.featured_image_url} alt="" className="w-full h-40 object-cover" />
+                <img src={a!.featured_image_url} alt={a!.headline} className="w-full h-40 object-cover" />
               ) : (
                 <div className="w-full h-40 bg-panel" />
               )}

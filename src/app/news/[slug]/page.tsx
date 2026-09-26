@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 
 const SOURCE_LABEL: Record<string, string> = {
@@ -8,6 +9,49 @@ const SOURCE_LABEL: Record<string, string> = {
   instagram: "View Original on Instagram",
   facebook: "View Original on Facebook",
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = await createClient();
+  const { data: article } = await supabase
+    .from("news_articles")
+    .select("headline, excerpt, featured_image_url, published_at")
+    .eq("slug", slug)
+    .eq("status", "published")
+    .single();
+
+  if (!article) return {};
+
+  const url = `https://portal.irvingnepalfc.com/news/${slug}`;
+  const title = `${article.headline} | Irving Nepal FC`;
+  const description = article.excerpt ?? undefined;
+  const images = article.featured_image_url ? [article.featured_image_url] : undefined;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      title,
+      description,
+      url,
+      images,
+      publishedTime: article.published_at ?? undefined,
+      siteName: "Irving Nepal FC",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images,
+    },
+  };
+}
 
 export default async function NewsArticlePage({
   params,
@@ -26,8 +70,30 @@ export default async function NewsArticlePage({
 
   if (!article) notFound();
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: article.headline,
+    description: article.excerpt,
+    image: article.featured_image_url ? [article.featured_image_url] : undefined,
+    datePublished: article.published_at ?? undefined,
+    author: { "@type": "Organization", name: "Irving Nepal FC" },
+    publisher: {
+      "@type": "Organization",
+      name: "Irving Nepal FC",
+      logo: { "@type": "ImageObject", url: "https://portal.irvingnepalfc.com/crest.png" },
+    },
+    mainEntityOfPage: `https://portal.irvingnepalfc.com/news/${slug}`,
+  };
+
   return (
-    <div className="min-h-screen bg-navy text-white">
+    <>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <div className="min-h-screen bg-navy text-white">
       <header className="border-b border-line px-4 py-5">
         <div className="mx-auto flex max-w-3xl items-center gap-3">
           <Image src="/crest.png" alt="Irving Nepal FC crest" width={40} height={40} />
@@ -56,7 +122,7 @@ export default async function NewsArticlePage({
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={article.featured_image_url}
-            alt=""
+            alt={article.headline}
             className="w-full rounded-lg mt-6 max-h-96 object-cover"
           />
         )}
@@ -94,6 +160,7 @@ export default async function NewsArticlePage({
           </div>
         )}
       </main>
-    </div>
+      </div>
+    </>
   );
 }
