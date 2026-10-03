@@ -38,6 +38,9 @@ export default async function AdminLayout({
         <Link href="/admin/registrations" className="text-sm underline">
           Registrations
         </Link>
+        <Link href="/admin/messages" className="text-sm underline">
+          Messages
+        </Link>
         <Link href="/admin/teams" className="text-sm underline">
           Teams
         </Link>
