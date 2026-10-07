@@ -5,7 +5,7 @@ Next.js (App Router) and Supabase.
 
 ## Stack
 
-- **Next.js 15** (App Router, TypeScript, Tailwind CSS)
+- **Next.js 16** (App Router, TypeScript, Tailwind CSS)
 - **Supabase** — Postgres database, Auth, Row-Level Security
 - **Vercel** — hosting
 - **Stripe** — payments (added in a later step)
