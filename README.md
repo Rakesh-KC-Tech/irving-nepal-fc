@@ -14,6 +14,18 @@ Member portal, payments, and newsroom for [Irving Nepal FC](https://irvingnepalf
 - **Live match data** from the ClubVerse Partner API, exposed to the public marketing site through small JSON endpoints.
 - **Contact form and newsletter**, with email notifications.
 
+## Screenshots
+
+Public pages of the live portal. The member area and admin dashboard sit behind login and show real member and payment data, so they are not pictured.
+
+| Landing page | Membership application |
+| --- | --- |
+| ![Landing page](docs/screenshots/landing.png) | ![Membership application form](docs/screenshots/membership-application.png) |
+
+**Club news.** Match-result graphics like the one below are generated automatically from live match data, and articles are drafted for human review before publishing.
+
+![Club news page](docs/screenshots/club-news.png)
+
 ## Stack
 
 | Layer | Tech |
