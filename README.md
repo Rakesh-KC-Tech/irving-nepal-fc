@@ -16,7 +16,7 @@ Member portal, payments, and newsroom for [Irving Nepal FC](https://irvingnepalf
 
 ## Screenshots
 
-Public pages of the live portal. The member area and admin dashboard sit behind login and show real member and payment data, so they are not pictured.
+Public pages come from the live portal. The member area and admin dashboard sit behind login and hold real member and payment data, so the admin screens further down were captured from a local copy running against a throwaway database filled with fictional demo data.
 
 | Landing page | Membership application |
 | --- | --- |
@@ -25,6 +25,30 @@ Public pages of the live portal. The member area and admin dashboard sit behind 
 **Club news.** Match-result graphics like the one below are generated automatically from live match data, and articles are drafted for human review before publishing.
 
 ![Club news page](docs/screenshots/club-news.png)
+
+### Admin dashboard (demo data)
+
+All names, emails, and payments below are fictional.
+
+**Overview** with live counts for members, pending approvals, teams, upcoming events, and revenue.
+
+![Admin overview](docs/screenshots/admin-overview.jpg)
+
+**Members**: approve, reject, or suspend applicants and set membership expiry.
+
+![Admin members](docs/screenshots/admin-members.jpg)
+
+**Payments**: Stripe-backed payment history with status and total revenue.
+
+![Admin payments](docs/screenshots/admin-payments.jpg)
+
+**Registrations**: public sign-ups with payment status, ready to convert into member accounts.
+
+![Admin registrations](docs/screenshots/admin-registrations.jpg)
+
+**Audit log**: every admin action is recorded with who did it, what changed, and when.
+
+![Admin audit log](docs/screenshots/admin-audit-log.jpg)
 
 ## Stack
 
