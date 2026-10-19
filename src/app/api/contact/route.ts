@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/service";
+import { notifyAdmin } from "@/lib/notify";
 
 // The contact form lives on the static marketing site (no backend of its
 // own), so it posts here cross-origin; no logged-in user, so this writes
@@ -52,6 +53,12 @@ export async function POST(request: NextRequest) {
   if (error) {
     return NextResponse.json({ error: "Failed to send message" }, { status: 500, headers: CORS_HEADERS });
   }
+
+  await notifyAdmin({
+    subject: `New website message (${subject}) from ${name}`,
+    replyTo: email,
+    text: `${name} <${email}>\nSubject: ${subject}\n\n${message}\n\n— Reply to this email to answer them directly.\nAll messages: https://portal.irvingnepalfc.com/admin/messages`,
+  });
 
   return NextResponse.json({ ok: true }, { status: 201, headers: CORS_HEADERS });
 }

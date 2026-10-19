@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/service";
 import { stripe } from "@/lib/stripe";
 import { getClub } from "@/lib/clubverse";
+import { notifyAdmin } from "@/lib/notify";
 
 // The "Join The Club" form lives on the static marketing site, which has
 // no backend of its own, so it posts here cross-origin. There's no logged
@@ -94,6 +95,12 @@ export async function POST(request: NextRequest) {
       { status: 500, headers: CORS_HEADERS },
     );
   }
+
+  await notifyAdmin({
+    subject: `New registration: ${firstName} ${lastName} (${plan})`,
+    replyTo: email,
+    text: `${firstName} ${lastName} <${email}>\nPhone: ${phone}\nPlan: ${plan}${preferredPosition ? `\nPosition: ${preferredPosition}` : ""}${notes ? `\nNotes: ${notes}` : ""}\n\nPayment is collected at checkout — check the status here:\nhttps://portal.irvingnepalfc.com/admin/registrations`,
+  });
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
