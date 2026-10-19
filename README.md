@@ -1,74 +1,65 @@
-# Irving Nepal FC — Member Portal
+# Irving Nepal FC — Club Platform
 
-Membership, teams, and payments portal for Irving Nepal FC, built with
-Next.js (App Router) and Supabase.
+Member portal, payments, and newsroom for [Irving Nepal FC](https://irvingnepalfc.com), a community soccer club in Irving, Texas. Built and maintained by [Rakesh KC](https://github.com/Rakesh-KC-Tech).
+
+**Member portal:** [portal.irvingnepalfc.com](https://portal.irvingnepalfc.com) · **Club website:** [irvingnepalfc.com](https://irvingnepalfc.com)
+
+## What it does
+
+- **Member accounts** with approval-based sign-up (pending → approved / rejected / suspended) and role-based access (member / admin).
+- **Registrations and payments** through Stripe: membership plans, checkout, signature-verified webhooks, and automatically generated invoices.
+- **Admin dashboard** for members, teams, events, documents, announcements, registrations, payments, messages, and an audit log of admin actions.
+- **Teams and events** with RSVPs, attendance, and player stats.
+- **Club news** with an AI-assisted drafting pipeline: new YouTube uploads and match results become article drafts (plus generated match graphics) for a human to review before publishing.
+- **Live match data** from the ClubVerse Partner API, exposed to the public marketing site through small JSON endpoints.
+- **Contact form and newsletter**, with email notifications.
 
 ## Stack
 
-- **Next.js 16** (App Router, TypeScript, Tailwind CSS)
-- **Supabase** — Postgres database, Auth, Row-Level Security
-- **Vercel** — hosting
-- **Stripe** — payments (added in a later step)
+| Layer | Tech |
+| --- | --- |
+| Framework | Next.js 16 (App Router), React 19, TypeScript |
+| Styling | Tailwind CSS 4 |
+| Database and auth | Supabase (PostgreSQL, Auth, Row Level Security) |
+| Payments | Stripe |
+| AI | Anthropic Claude API (article drafting) |
+| Hosting | Vercel, including a daily cron job for news sync |
 
-## Step 1 status — Foundation
+## Security design
 
-Done:
+- **Row Level Security** is enabled on the database tables: 38 policies across 15 migrations in [`supabase/migrations`](supabase/migrations), so access rules live in the database, not only in app code.
+- Session refresh and route protection in middleware for `/dashboard` and `/admin`.
+- The Supabase **service-role key is server-only**. It is used where no signed-in user exists, such as the Stripe webhook.
+- Stripe webhooks are verified with the signing secret; the cron endpoint requires a bearer secret.
+- Admin actions are written to an audit log.
+- Secrets are never committed: `.env*` is git-ignored, and only [`.env.local.example`](.env.local.example) (names, no values) is tracked.
 
-- Next.js app scaffolded with TypeScript + Tailwind
-- Supabase browser/server clients (`src/lib/supabase/`)
-- Auth middleware that refreshes sessions and protects `/dashboard` and
-  `/admin` (`src/middleware.ts`)
-- Email/password sign up, log in, log out, email confirmation
-  (`src/app/login`, `src/app/signup`, `src/app/auth/confirm`)
-- Initial DB migration: `profiles` table with `role` (member/admin) and
-  `status` (pending/approved/rejected/suspended), auto-created on signup,
-  with baseline RLS policies (`supabase/migrations/0001_init.sql`)
+## Project layout
 
-Still needed from you before this runs end-to-end:
+```
+src/app/          Routes: public pages, member area, /admin, and /api endpoints
+src/lib/          Supabase clients, Stripe, ClubVerse client, news ingestion
+supabase/migrations/   Versioned SQL schema and RLS policies
+scripts/          Match-graphic generation
+```
 
-1. **Create a Supabase project** at [supabase.com](https://supabase.com) (org:
-   whatever you use for the club).
-2. **Run the migration**: either paste
-   `supabase/migrations/0001_init.sql` into the Supabase SQL Editor, or install
-   the [Supabase CLI](https://supabase.com/docs/guides/local-development/cli/getting-started)
-   and run `supabase link` + `supabase db push`.
-3. **Copy your env vars**: in the Supabase dashboard, go to
-   Project Settings → API, then copy `.env.local.example` to `.env.local` and
-   fill in `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and
-   `SUPABASE_SERVICE_ROLE_KEY`.
-4. **Create your own admin account**: sign up through `/signup` once running,
-   then in the Supabase SQL Editor run:
-   ```sql
-   update public.profiles set role = 'admin', status = 'approved'
-   where id = '<your-auth-user-id>';
-   ```
-
-## Local development
+## Run it locally
 
 ```bash
 npm install
-cp .env.local.example .env.local   # then fill in the values
+cp .env.local.example .env.local   # fill in your own values
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000). You will need your own Supabase project (apply the SQL files in `supabase/migrations` in order) and Stripe test-mode keys. The Anthropic, YouTube, ClubVerse, and Resend keys are only needed for the features that use them.
 
-## Deploying to Vercel
+To make your first admin, sign up through `/signup`, then run in the Supabase SQL editor:
 
-1. Push this repo to GitHub.
-2. In Vercel, "Add New Project" → import the repo.
-3. Add the same environment variables from `.env.local` in the Vercel
-   project's Settings → Environment Variables (set `NEXT_PUBLIC_SITE_URL` to
-   your production URL, e.g. `https://portal.irvingnepalfc.com`).
-4. Deploy.
-5. In your domain's DNS settings (IONOS), add a `CNAME` record:
-   `portal` → `cname.vercel-dns.com` (Vercel will show the exact value once
-   you add the domain in Project Settings → Domains). Once it resolves, add a
-   "🔐 Member Login" button on the existing IONOS site linking to
-   `https://portal.irvingnepalfc.com`.
+```sql
+update public.profiles set role = 'admin', status = 'approved'
+where id = '<your-auth-user-id>';
+```
 
-## Roadmap
+## Deploy
 
-See the project plan for Steps 2–8 (security/RLS, member management,
-soccer operations, club operations, payments via Stripe, admin dashboard,
-and testing).
+Deployed on Vercel. Add the same environment variables from `.env.local` in the project settings, set `NEXT_PUBLIC_SITE_URL` to the production URL, and point your Stripe webhook at `/api/webhooks/stripe`.
